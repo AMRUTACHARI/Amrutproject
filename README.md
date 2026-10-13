@@ -106,6 +106,38 @@ sudo supervisorctl restart frontend
 A default **admin** account is seeded on startup from `ADMIN_EMAIL` / `ADMIN_PASSWORD`
 (see `/app/memory/test_credentials.md`).
 
+## Deployment Guide
+
+### Option 1: Docker Compose (Recommended for Any Cloud / VPS)
+Run the entire production stack (Frontend, Backend, and MongoDB) with a single command:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/AMRUTACHARI/Amrutproject.git
+cd Amrutproject
+
+# 2. Configure environment files from templates
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
+# 3. Edit backend/.env with your production keys & secrets
+# 4. Start all services
+docker compose up -d --build
+```
+Your frontend will be accessible on port `3000`, backend on port `8001`, and MongoDB on port `27017`.
+
+### Option 2: Render / Railway / Fly.io / VPS
+1. **Backend**:
+   - Build command: `pip install -r requirements.txt`
+   - Start command: `python -m uvicorn server:app --host 0.0.0.0 --port $PORT`
+   - Environment variables: Set the variables defined in `backend/.env.example`.
+2. **Frontend**:
+   - Build command: `yarn build` (or `npm run build`)
+   - Output directory: `build`
+   - Environment variable: `REACT_APP_BACKEND_URL=https://your-backend-api.com`
+
+---
+
 ## Assumptions
 
 - Frontend and backend are served from the same origin via ingress, so auth cookies are first-party.
