@@ -81,27 +81,15 @@ def verify_password(plain: str, hashed: str) -> bool:
         return False
 
 
-PASSWORD_RE = {
-    "length": lambda p: len(p) >= 8,
-    "upper": lambda p: bool(re.search(r"[A-Z]", p)),
-    "lower": lambda p: bool(re.search(r"[a-z]", p)),
-    "digit": lambda p: bool(re.search(r"\d", p)),
-    "special": lambda p: bool(re.search(r"[^A-Za-z0-9]", p)),
-}
-
-
-def validate_strong_password(password: str) -> Optional[str]:
-    if not PASSWORD_RE["length"](password):
-        return "Password must be at least 8 characters long."
-    if not PASSWORD_RE["upper"](password):
-        return "Password must contain an uppercase letter."
-    if not PASSWORD_RE["lower"](password):
-        return "Password must contain a lowercase letter."
-    if not PASSWORD_RE["digit"](password):
-        return "Password must contain a number."
-    if not PASSWORD_RE["special"](password):
-        return "Password must contain a special character."
-    return None
+def validate_strong_password(p: str) -> Optional[str]:
+    checks = [
+        (len(p) >= 8, "Password must be at least 8 characters long."),
+        (re.search(r"[A-Z]", p), "Password must contain an uppercase letter."),
+        (re.search(r"[a-z]", p), "Password must contain a lowercase letter."),
+        (re.search(r"\d", p), "Password must contain a number."),
+        (re.search(r"[^A-Za-z0-9]", p), "Password must contain a special character."),
+    ]
+    return next((msg for ok, msg in checks if not ok), None)
 
 
 def create_access_token(user_id: str, email: str, role: str) -> str:

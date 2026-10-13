@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Shell, PageHeader } from "@/components/Shell";
+import { Shell, PageHeader, initials } from "@/components/Navbar";
 import { statusColor } from "@/components/ScanResult";
-import { initials } from "@/components/Navbar";
 import { useAuth } from "@/context/AuthContext";
 import api, { apiError } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

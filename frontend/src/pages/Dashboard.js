@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Shell, PageHeader } from "@/components/Shell";
+import { Shell, PageHeader } from "@/components/Navbar";
 import { ScanResult, statusColor } from "@/components/ScanResult";
 import { useAuth } from "@/context/AuthContext";
 import api, { apiError } from "@/lib/api";
@@ -34,59 +34,24 @@ import {
   Camera,
   Leaf,
   Sparkles,
-  ArrowRight,
   Sprout,
   Image as ImageIcon,
+  CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 
-// Ready-to-test real living plant sample photos for instant testing (local verified photos)
 const QUICK_SAMPLE_PLANTS = [
-  {
-    name: "Coconut Palm",
-    label: "Coconut Palm (Nariyal)",
-    url: "/plants/coconut.jpg",
-  },
-  {
-    name: "Lipstick Palm",
-    label: "Lipstick Palm (Sealing Wax Palm)",
-    url: "/plants/lipstick_palm.jpg",
-  },
-  {
-    name: "Guava",
-    label: "Guava Tree (Amrood)",
-    url: "/plants/guava.jpg",
-  },
-  {
-    name: "Cinnamon",
-    label: "Cinnamon Tree (Dalchini)",
-    url: "/plants/cinnamon.jpg",
-  },
-  {
-    name: "Mango",
-    label: "Mango Tree (Aam)",
-    url: "/plants/mango.jpg",
-  },
-  {
-    name: "Curry Leaf",
-    label: "Curry Leaf (Kadi Patta)",
-    url: "/plants/curry_leaf.jpg",
-  },
-  {
-    name: "Hibiscus / Gudhal",
-    label: "Hibiscus (Gudhal)",
-    url: "/plants/hibiscus.jpg",
-  },
-  {
-    name: "Tulsi",
-    label: "Tulsi (Holy Basil)",
-    url: "/plants/tulsi.jpg",
-  },
-  {
-    name: "Turmeric",
-    label: "Turmeric Plant (Haldi)",
-    url: "/plants/turmeric.jpg",
-  },
+  { name: "Curry Leaf", label: "Curry Leaf (Kadi Patta)", url: "/plants/curry_leaf.jpg", category: "Spices" },
+  { name: "Coconut Palm", label: "Coconut Palm (Nariyal)", url: "/plants/coconut.jpg", category: "Palms" },
+  { name: "Lipstick Palm", label: "Lipstick Palm (Sealing Wax)", url: "/plants/lipstick_palm.jpg", category: "Palms" },
+  { name: "Mango", label: "Mango Tree (Aam)", url: "/plants/mango.jpg", category: "Fruit" },
+  { name: "Hibiscus / Gudhal", label: "Hibiscus (Gudhal)", url: "/plants/hibiscus.jpg", category: "Garden" },
+  { name: "Tulsi", label: "Tulsi (Holy Basil)", url: "/plants/tulsi.jpg", category: "Medicinal" },
+  { name: "Turmeric", label: "Turmeric (Haldi)", url: "/plants/turmeric.jpg", category: "Spices" },
+  { name: "Neem", label: "Neem Tree", url: "/plants/neem.jpg", category: "Medicinal" },
+  { name: "Lemon / Acid Lime", label: "Lemon Tree (Nimbu)", url: "/plants/lemon.jpg", category: "Fruit" },
+  { name: "Guava", label: "Guava Tree (Amrood)", url: "/plants/guava.jpg", category: "Fruit" },
+  { name: "Aloe Vera", label: "Aloe Vera (Ghritkumari)", url: "/plants/aloe_vera.jpg", category: "Medicinal" },
 ];
 
 export default function Dashboard() {
@@ -99,6 +64,8 @@ export default function Dashboard() {
   const [image, setImage] = useState(null);
   const [plant, setPlant] = useState("");
   const [scanning, setScanning] = useState(false);
+  const [scanStage, setScanStage] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [recent, setRecent] = useState([]);
@@ -119,6 +86,17 @@ export default function Dashboard() {
   useEffect(() => {
     loadRecent();
   }, []);
+
+  useEffect(() => {
+    if (!scanning) {
+      setScanStage(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setScanStage((s) => (s + 1) % 3);
+    }, 1200);
+    return () => clearInterval(interval);
+  }, [scanning]);
 
   const onFile = (file) => {
     if (!file) return;
@@ -218,6 +196,12 @@ export default function Dashboard() {
     stopCamera();
   };
 
+  const scanMessages = [
+    "Analyzing leaf venation & chloroplast density…",
+    "Cross-referencing subcontinent botanical pathogen models…",
+    "Formulating targeted organic Ayurvedic remedy protocol…",
+  ];
+
   return (
     <Shell>
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -259,7 +243,7 @@ export default function Dashboard() {
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.9fr] items-start">
           {/* Main Scanner Section */}
           <div className="space-y-6">
-            <Card className="rounded-3xl border-primary/20 bg-card shadow-sm">
+            <Card className="rounded-3xl border-primary/20 bg-card shadow-sm overflow-hidden">
               <CardContent className="p-6 sm:p-8">
                 <input
                   ref={fileRef}
@@ -275,7 +259,18 @@ export default function Dashboard() {
                     <button
                       type="button"
                       onClick={() => fileRef.current?.click()}
-                      className="group flex w-full flex-col items-center justify-center gap-3.5 rounded-2xl border-2 border-dashed border-primary/20 bg-secondary/20 py-14 px-6 text-center transition-all hover:border-primary/40 hover:bg-secondary/40"
+                      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                      onDragLeave={() => setIsDragging(false)}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setIsDragging(false);
+                        if (e.dataTransfer.files?.[0]) onFile(e.dataTransfer.files[0]);
+                      }}
+                      className={`group flex w-full flex-col items-center justify-center gap-3.5 rounded-2xl border-2 border-dashed py-14 px-6 text-center transition-all ${
+                        isDragging
+                          ? "border-accent bg-accent/10 scale-[1.01]"
+                          : "border-primary/20 bg-secondary/20 hover:border-primary/40 hover:bg-secondary/40"
+                      }`}
                       data-testid="upload-dropzone"
                     >
                       <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/20 bg-background/90 text-primary shadow-xs transition-transform duration-300 group-hover:scale-105">
@@ -297,7 +292,7 @@ export default function Dashboard() {
                         type="button"
                         variant="outline"
                         onClick={openCamera}
-                        className="w-full sm:flex-1 rounded-full border-primary/20 text-xs font-semibold uppercase tracking-wider"
+                        className="w-full sm:flex-1 rounded-full border-primary/20 text-xs font-semibold uppercase tracking-wider hover:bg-secondary"
                         data-testid="open-camera-button"
                       >
                         <Camera className="mr-2 h-4 w-4 text-primary" /> Take a Photo with Camera
@@ -305,20 +300,23 @@ export default function Dashboard() {
                     </div>
 
                     {/* Quick test sample photos */}
-                    <div className="pt-2 border-t border-primary/10">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-2">
-                        Try with sample plant photos:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="pt-3 border-t border-primary/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+                          Try with sample plant photos:
+                        </p>
+                        <span className="font-mono text-[9px] text-muted-foreground">9 verified presets</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
                         {QUICK_SAMPLE_PLANTS.map((sp) => (
                           <button
                             key={sp.label}
                             type="button"
                             onClick={() => loadSamplePlant(sp)}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-primary/15 bg-background px-3 py-1 text-[11px] font-medium text-foreground/80 hover:border-primary/40 hover:bg-secondary/60 hover:text-foreground transition-all"
+                            className="inline-flex items-center gap-1.5 rounded-full border border-primary/15 bg-background px-3 py-1 text-[11px] font-medium text-foreground/80 hover:border-accent hover:bg-accent/10 hover:text-foreground transition-all shadow-2xs"
                           >
                             <ImageIcon className="h-3 w-3 text-primary" />
-                            {sp.label}
+                            <span>{sp.label}</span>
                           </button>
                         ))}
                       </div>
@@ -326,7 +324,7 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {/* Image Preview with Viewfinder Brackets */}
+                    {/* Image Preview with Viewfinder Brackets & Laser Scanning Beam */}
                     <div className="relative overflow-hidden rounded-2xl bg-neutral-900 shadow-md">
                       <img
                         src={image}
@@ -334,26 +332,46 @@ export default function Dashboard() {
                         className="max-h-96 w-full object-cover"
                         data-testid="preview-image"
                       />
-                      {/* Reticle Brackets */}
-                      <div className="absolute inset-5 pointer-events-none border border-white/20 rounded-xl">
-                        <div className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-accent" />
-                        <div className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-accent" />
-                        <div className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-accent" />
-                        <div className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-accent" />
-                      </div>
 
-                      <button
-                        onClick={reset}
-                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-black transition-colors"
-                        data-testid="clear-image-button"
-                        title="Remove photo"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
+                      {/* Laser scanner overlay during diagnostic run */}
+                      {scanning ? (
+                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/50 backdrop-blur-2xs">
+                          <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent shadow-[0_0_15px_hsl(var(--accent))] animate-scan-laser" />
+                          <div className="mx-4 rounded-2xl border border-accent/40 bg-background/90 px-5 py-3 text-center shadow-lg backdrop-blur-md">
+                            <div className="flex items-center justify-center gap-2 text-accent font-mono text-xs uppercase tracking-wider font-semibold">
+                              <Sparkles className="h-4 w-4 animate-spin" />
+                              <span>AI Diagnostic Engine Active</span>
+                            </div>
+                            <p className="mt-1 font-mono text-[11px] text-muted-foreground transition-all">
+                              {scanMessages[scanStage]}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {/* Reticle Brackets */}
+                          <div className="absolute inset-5 pointer-events-none border border-white/20 rounded-xl">
+                            <div className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-accent" />
+                            <div className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-accent" />
+                            <div className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-accent" />
+                            <div className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-accent" />
+                          </div>
 
-                      <div className="absolute bottom-3 left-3 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 font-mono text-[10px] text-white">
-                        PHOTO READY TO CHECK
-                      </div>
+                          <button
+                            onClick={reset}
+                            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-black transition-colors"
+                            data-testid="clear-image-button"
+                            title="Remove photo"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+
+                          <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 font-mono text-[10px] text-white">
+                            <CheckCircle2 className="h-3 w-3 text-accent" />
+                            <span>PHOTO READY TO CHECK</span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
@@ -368,12 +386,30 @@ export default function Dashboard() {
                       <SelectItem value="Other / Auto-detect">Auto-detect plant (AI)</SelectItem>
                       <SelectGroup>
                         <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                          Kitchen Vegetables & Herbs
+                        </SelectLabel>
+                        <SelectItem value="Okra / Lady Finger">Okra / Lady Finger (Bhindi)</SelectItem>
+                        <SelectItem value="Bitter Gourd">Bitter Gourd (Karela)</SelectItem>
+                        <SelectItem value="Bottle Gourd">Bottle Gourd (Lauki)</SelectItem>
+                        <SelectItem value="Spinach">Spinach (Palak)</SelectItem>
+                        <SelectItem value="Mint">Mint (Pudina)</SelectItem>
+                      </SelectGroup>
+                      <SelectGroup>
+                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                           Palms & Big Plants
                         </SelectLabel>
                         <SelectItem value="Coconut Palm">Coconut Palm (Nariyal)</SelectItem>
                         <SelectItem value="Areca Nut / Betel Palm">Areca Nut / Supari Palm</SelectItem>
                         <SelectItem value="Lipstick Palm">Lipstick Palm (Sealing Wax Palm)</SelectItem>
                         <SelectItem value="Palmyra Palm">Palmyra Palm (Tadgola / Taad)</SelectItem>
+                        <SelectItem value="Date Palm">Date Palm (Khajoor)</SelectItem>
+                        <SelectItem value="Wild Date Palm">Wild Date Palm (Khajuri / Nolen Gur)</SelectItem>
+                        <SelectItem value="Fish-tail Palm">Fish-tail Palm (Mari / Kitul)</SelectItem>
+                        <SelectItem value="Golden Cane Palm">Golden Cane Palm (Dypsis)</SelectItem>
+                        <SelectItem value="Royal Palm">Royal Palm (Raj Taad)</SelectItem>
+                        <SelectItem value="Foxtail Palm">Foxtail Palm</SelectItem>
+                        <SelectItem value="Bottle Palm">Bottle Palm</SelectItem>
+                        <SelectItem value="Bismarck Palm">Bismarck Palm (Silver Fan Palm)</SelectItem>
                         <SelectItem value="Bamboo">Bamboo (Baans)</SelectItem>
                         <SelectItem value="Banana / Plantain">Banana Plant (Kela)</SelectItem>
                       </SelectGroup>
@@ -414,12 +450,16 @@ export default function Dashboard() {
                       </SelectGroup>
                       <SelectGroup>
                         <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Medicinal & Home Plants
+                          Medicinal & Courtyard Plants
                         </SelectLabel>
                         <SelectItem value="Tulsi">Tulsi (Holy Basil)</SelectItem>
                         <SelectItem value="Neem">Neem Tree</SelectItem>
                         <SelectItem value="Aloe Vera">Aloe Vera (Ghritkumari)</SelectItem>
                         <SelectItem value="Giloy">Giloy (Guduchi Vine)</SelectItem>
+                        <SelectItem value="Brahmi">Brahmi (Water Hyssop)</SelectItem>
+                        <SelectItem value="Shatavari">Shatavari (Wild Asparagus)</SelectItem>
+                        <SelectItem value="Kalmegh">Kalmegh (King of Bitters)</SelectItem>
+                        <SelectItem value="Vasaka">Vasaka / Adhatoda (Vasa)</SelectItem>
                         <SelectItem value="Money Plant">Money Plant (Pothos)</SelectItem>
                       </SelectGroup>
                     </SelectContent>
@@ -428,13 +468,13 @@ export default function Dashboard() {
                   <Button
                     onClick={scan}
                     disabled={scanning || !image}
-                    className="flex-1 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary-foreground shadow-sm hover:opacity-95"
+                    className="flex-1 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary-foreground shadow-sm hover:opacity-95 transition-opacity"
                     data-testid="scan-button"
                   >
                     {scanning ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin text-accent" />
-                        Checking plant health…
+                        Analyzing plant health…
                       </>
                     ) : (
                       <>
@@ -458,23 +498,23 @@ export default function Dashboard() {
 
             {/* Camera Dialog with Viewfinder */}
             <Dialog open={cameraOpen} onOpenChange={(o) => !o && stopCamera()}>
-              <DialogContent className="max-w-md rounded-3xl p-6" data-testid="camera-dialog">
+              <DialogContent className="max-w-md w-[92vw] sm:w-full rounded-3xl p-5 sm:p-6" data-testid="camera-dialog">
                 <DialogHeader>
-                  <DialogTitle className="font-serif text-xl">Take Plant Photo</DialogTitle>
+                  <DialogTitle className="font-serif text-lg sm:text-xl">Take Plant Photo</DialogTitle>
                   <DialogDescription className="text-xs">
                     Point your camera at the sick leaf or stem, then tap Take Photo.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="relative overflow-hidden rounded-2xl bg-black">
+                <div className="relative overflow-hidden rounded-2xl bg-black aspect-4/3 sm:aspect-auto sm:h-72">
                   <video
                     ref={videoRef}
                     autoPlay
                     playsInline
                     muted
-                    className="h-72 w-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                   {/* Visual reticle */}
-                  <div className="absolute inset-6 pointer-events-none border border-white/30 rounded-xl">
+                  <div className="absolute inset-4 sm:inset-6 pointer-events-none border border-white/30 rounded-xl">
                     <div className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-accent" />
                     <div className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-accent" />
                     <div className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-accent" />

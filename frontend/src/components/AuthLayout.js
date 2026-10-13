@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Leaf, Sprout } from "lucide-react";
+import { Sprout, Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const FACTS = [
   "Cardamom (Elettaria cardamomum) is known as the “Queen of Spices” and flourishes in the shaded mist of the Western Ghats.",
@@ -16,7 +17,6 @@ export function AuthLayout({ title, subtitle, children, footer, testid }) {
 
   return (
     <div className="flex min-h-screen bg-background botanical-parchment" data-testid={testid}>
-      {/* Left visual panel */}
       <div className="relative hidden w-1/2 overflow-hidden lg:block">
         <img
           src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"
@@ -63,7 +63,6 @@ export function AuthLayout({ title, subtitle, children, footer, testid }) {
         </div>
       </div>
 
-      {/* Right interactive form panel */}
       <div className="flex w-full items-center justify-center px-6 py-12 lg:w-1/2">
         <div className="w-full max-w-md animate-fade-up">
           <Link to="/" className="mb-8 flex items-center gap-3 lg:hidden">
@@ -91,6 +90,67 @@ export function AuthLayout({ title, subtitle, children, footer, testid }) {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+export function PasswordInput({ id, value, onChange, placeholder, testid, autoComplete, ...props }) {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="relative">
+      <Input
+        id={id}
+        type={show ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        data-testid={testid}
+        className="pr-10"
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={() => setShow((s) => !s)}
+        aria-label={show ? "Hide password" : "Show password"}
+        data-testid={`${testid}-toggle`}
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+      >
+        {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+      </button>
+    </div>
+  );
+}
+
+export function PasswordStrength({ password }) {
+  if (!password) return null;
+  const checks = [
+    { label: "8+ characters", ok: password.length >= 8 },
+    { label: "Uppercase letter", ok: /[A-Z]/.test(password) },
+    { label: "Lowercase letter", ok: /[a-z]/.test(password) },
+    { label: "Number", ok: /\d/.test(password) },
+    { label: "Special character", ok: /[^A-Za-z0-9]/.test(password) },
+  ];
+  const score = checks.filter((c) => c.ok).length;
+  const color = score <= 2 ? "bg-destructive" : score <= 4 ? "bg-[hsl(38_78%_56%)]" : "bg-primary";
+  const label = score <= 2 ? "Weak" : score <= 4 ? "Good" : "Strong";
+
+  return (
+    <div className="space-y-2" data-testid="password-strength">
+      <div className="flex items-center justify-between">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+          <div className={`h-full rounded-full transition-all duration-300 ${color}`} style={{ width: `${(score / 5) * 100}%` }} />
+        </div>
+        <span className="ml-3 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{label}</span>
+      </div>
+      <ul className="grid grid-cols-2 gap-x-3 gap-y-1">
+        {checks.map((c) => (
+          <li key={c.label} className={`flex items-center gap-1.5 text-[11px] ${c.ok ? "text-primary" : "text-muted-foreground"}`}>
+            <span className={`inline-block h-1.5 w-1.5 rounded-full ${c.ok ? "bg-primary" : "bg-muted-foreground/40"}`} />
+            {c.label}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

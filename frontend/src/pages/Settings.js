@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Shell, PageHeader } from "@/components/Shell";
+import { Shell, PageHeader } from "@/components/Navbar";
 import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "next-themes";
 import api, { apiError } from "@/lib/api";

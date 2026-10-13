@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { AuthLayout } from "@/components/AuthLayout";
-import { PasswordInput } from "@/components/PasswordInput";
-import { PasswordStrength } from "@/components/PasswordStrength";
+import { AuthLayout, PasswordInput, PasswordStrength } from "@/components/AuthLayout";
 import api, { apiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";

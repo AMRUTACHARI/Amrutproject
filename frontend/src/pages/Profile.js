@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Shell, PageHeader } from "@/components/Shell";
-import { PasswordInput } from "@/components/PasswordInput";
-import { PasswordStrength } from "@/components/PasswordStrength";
-import { initials } from "@/components/Navbar";
+import { Shell, PageHeader, initials } from "@/components/Navbar";
+import { PasswordInput, PasswordStrength } from "@/components/AuthLayout";
 import { useAuth } from "@/context/AuthContext";
 import api, { apiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";

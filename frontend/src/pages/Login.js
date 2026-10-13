@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { AuthLayout } from "@/components/AuthLayout";
-import { PasswordInput } from "@/components/PasswordInput";
+import { AuthLayout, PasswordInput } from "@/components/AuthLayout";
 import { useAuth } from "@/context/AuthContext";
 import { apiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";

@@ -1,9 +1,8 @@
-import "@/App.css";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { ProtectedRoute, AdminRoute } from "@/components/ProtectedRoute";
-import { ThemeSync } from "@/components/ThemeSync";
+import { useTheme } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 
 import Home from "@/pages/Home";
@@ -18,17 +17,29 @@ import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
 import Admin from "@/pages/Admin";
 
-function ScrollToTop() {
-  const { pathname, hash } = useLocation();
-
-  useLayoutEffect(() => {
-    if (!hash) window.scrollTo(0, 0);
-  }, [pathname, hash]);
-
+function ThemeSync() {
+  const { user } = useAuth();
+  const { setTheme } = useTheme();
+  const applied = useRef(false);
+  useEffect(() => {
+    if (user === false) { applied.current = false; return; }
+    if (!applied.current && user && typeof user === "object" && user.preferences?.theme) {
+      applied.current = true;
+      setTheme(user.preferences.theme);
+    }
+  }, [user, setTheme]);
   return null;
 }
 
-function App() {
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useLayoutEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
+
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -54,5 +65,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
