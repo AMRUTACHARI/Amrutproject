@@ -127,10 +127,12 @@ const INTERACTIVE_SPECIMENS = [
 
 const GALLERY_TABS = [
   { id: "all", label: "All Plants" },
+  { id: "palms", label: "Palms & Big Trees" },
   { id: "spices", label: "Spices & Kitchen" },
   { id: "medicinal", label: "Medicinal & Herbs" },
   { id: "flowers", label: "Garden Flowers" },
-  { id: "fruits-trees", label: "Fruits & Trees" },
+  { id: "fruits-trees", label: "Fruits & Orchards" },
+  { id: "indoor", label: "Indoor & Air-Purifying" },
 ];
 
 export default function Home() {
@@ -202,10 +204,14 @@ export default function Home() {
   // Filter curated signature plants for showcase gallery
   const filteredGalleryPlants = SIGNATURE_GALLERY_PLANTS.filter((plant) => {
     if (selectedCategory === "all") return true;
-    if (selectedCategory === "spices") return plant.category.includes("Spices");
-    if (selectedCategory === "medicinal") return plant.category.includes("Medicinal");
-    if (selectedCategory === "flowers") return plant.category.includes("Flowers");
-    if (selectedCategory === "fruits-trees") return plant.category.includes("Fruits") || plant.category.includes("Trees");
+    const cat = (plant.category || "").toLowerCase();
+    const name = (plant.name || "").toLowerCase();
+    if (selectedCategory === "palms") return cat.includes("palm") || name.includes("palm") || cat.includes("wood") || name.includes("bamboo");
+    if (selectedCategory === "spices") return cat.includes("spice") || cat.includes("kitchen") || cat.includes("vegetable") || cat.includes("grain") || cat.includes("crop");
+    if (selectedCategory === "medicinal") return cat.includes("medicinal") || cat.includes("herb") || cat.includes("ayurvedic") || cat.includes("tonic");
+    if (selectedCategory === "flowers") return cat.includes("flower") || cat.includes("garden");
+    if (selectedCategory === "fruits-trees") return cat.includes("fruit") || cat.includes("tree") || cat.includes("orchard");
+    if (selectedCategory === "indoor") return cat.includes("indoor") || cat.includes("air") || cat.includes("foliage") || name.includes("snake") || name.includes("pothos") || name.includes("peace");
     return true;
   });
 

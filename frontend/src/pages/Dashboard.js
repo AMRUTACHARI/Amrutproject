@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Shell, PageHeader } from "@/components/Navbar";
 import { ScanResult, statusColor } from "@/components/ScanResult";
 import { useAuth } from "@/context/AuthContext";
 import api, { apiError } from "@/lib/api";
+import { INDIAN_SUBCONTINENT_PLANTS } from "@/lib/indianPlants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -41,17 +42,18 @@ import {
 import { toast } from "sonner";
 
 const QUICK_SAMPLE_PLANTS = [
-  { name: "Curry Leaf", label: "Curry Leaf (Kadi Patta)", url: "/plants/curry_leaf.jpg", category: "Spices" },
-  { name: "Coconut Palm", label: "Coconut Palm (Nariyal)", url: "/plants/coconut.jpg", category: "Palms" },
-  { name: "Lipstick Palm", label: "Lipstick Palm (Sealing Wax)", url: "/plants/lipstick_palm.jpg", category: "Palms" },
-  { name: "Mango", label: "Mango Tree (Aam)", url: "/plants/mango.jpg", category: "Fruit" },
-  { name: "Hibiscus / Gudhal", label: "Hibiscus (Gudhal)", url: "/plants/hibiscus.jpg", category: "Garden" },
-  { name: "Tulsi", label: "Tulsi (Holy Basil)", url: "/plants/tulsi.jpg", category: "Medicinal" },
-  { name: "Turmeric", label: "Turmeric (Haldi)", url: "/plants/turmeric.jpg", category: "Spices" },
-  { name: "Neem", label: "Neem Tree", url: "/plants/neem.jpg", category: "Medicinal" },
-  { name: "Lemon / Acid Lime", label: "Lemon Tree (Nimbu)", url: "/plants/lemon.jpg", category: "Fruit" },
-  { name: "Guava", label: "Guava Tree (Amrood)", url: "/plants/guava.jpg", category: "Fruit" },
-  { name: "Aloe Vera", label: "Aloe Vera (Ghritkumari)", url: "/plants/aloe_vera.jpg", category: "Medicinal" },
+  { name: "Snake Plant (Mother-in-Law's Tongue)", label: "Snake Plant (Sansevieria)", url: "/plants/snake_plant.jpg", category: "Indoor" },
+  { name: "Curry Leaf (Kadi Patta)", label: "Curry Leaf (Kadi Patta)", url: "/plants/curry_leaf.jpg", category: "Spices" },
+  { name: "Coconut Palm (Nariyal)", label: "Coconut Palm (Nariyal)", url: "/plants/coconut.jpg", category: "Palms" },
+  { name: "Lipstick Palm (Sealing Wax Palm)", label: "Lipstick Palm (Sealing Wax)", url: "/plants/lipstick_palm.jpg", category: "Palms" },
+  { name: "Mango Tree (Aam)", label: "Mango Tree (Aam)", url: "/plants/mango.jpg", category: "Fruit" },
+  { name: "Hibiscus (Gudhal / Jaswand)", label: "Hibiscus (Gudhal)", url: "/plants/hibiscus.jpg", category: "Garden" },
+  { name: "Tulsi (Holy Basil)", label: "Tulsi (Holy Basil)", url: "/plants/tulsi.jpg", category: "Medicinal" },
+  { name: "Turmeric (Haldi)", label: "Turmeric (Haldi)", url: "/plants/turmeric.jpg", category: "Spices" },
+  { name: "Neem Tree", label: "Neem Tree", url: "/plants/neem.jpg", category: "Medicinal" },
+  { name: "Lemon Tree (Nimbu)", label: "Lemon Tree (Nimbu)", url: "/plants/lemon.jpg", category: "Fruit" },
+  { name: "Guava Tree (Amrood)", label: "Guava Tree (Amrood)", url: "/plants/guava.jpg", category: "Fruit" },
+  { name: "Aloe Vera (Ghritkumari)", label: "Aloe Vera (Ghritkumari)", url: "/plants/aloe_vera.jpg", category: "Medicinal" },
 ];
 
 export default function Dashboard() {
@@ -69,6 +71,16 @@ export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [recent, setRecent] = useState([]);
+
+  const plantGroups = useMemo(() => {
+    const groups = {};
+    INDIAN_SUBCONTINENT_PLANTS.forEach((p) => {
+      const cat = p.category || "General Flora";
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(p);
+    });
+    return groups;
+  }, []);
 
   useEffect(() => {
     if (location.state?.scanImage) {
@@ -384,84 +396,18 @@ export default function Dashboard() {
                     </SelectTrigger>
                     <SelectContent className="max-h-80">
                       <SelectItem value="Other / Auto-detect">Auto-detect plant (AI)</SelectItem>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Kitchen Vegetables & Herbs
-                        </SelectLabel>
-                        <SelectItem value="Okra / Lady Finger">Okra / Lady Finger (Bhindi)</SelectItem>
-                        <SelectItem value="Bitter Gourd">Bitter Gourd (Karela)</SelectItem>
-                        <SelectItem value="Bottle Gourd">Bottle Gourd (Lauki)</SelectItem>
-                        <SelectItem value="Spinach">Spinach (Palak)</SelectItem>
-                        <SelectItem value="Mint">Mint (Pudina)</SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Palms & Big Plants
-                        </SelectLabel>
-                        <SelectItem value="Coconut Palm">Coconut Palm (Nariyal)</SelectItem>
-                        <SelectItem value="Areca Nut / Betel Palm">Areca Nut / Supari Palm</SelectItem>
-                        <SelectItem value="Lipstick Palm">Lipstick Palm (Sealing Wax Palm)</SelectItem>
-                        <SelectItem value="Palmyra Palm">Palmyra Palm (Tadgola / Taad)</SelectItem>
-                        <SelectItem value="Date Palm">Date Palm (Khajoor)</SelectItem>
-                        <SelectItem value="Wild Date Palm">Wild Date Palm (Khajuri / Nolen Gur)</SelectItem>
-                        <SelectItem value="Fish-tail Palm">Fish-tail Palm (Mari / Kitul)</SelectItem>
-                        <SelectItem value="Golden Cane Palm">Golden Cane Palm (Dypsis)</SelectItem>
-                        <SelectItem value="Royal Palm">Royal Palm (Raj Taad)</SelectItem>
-                        <SelectItem value="Foxtail Palm">Foxtail Palm</SelectItem>
-                        <SelectItem value="Bottle Palm">Bottle Palm</SelectItem>
-                        <SelectItem value="Bismarck Palm">Bismarck Palm (Silver Fan Palm)</SelectItem>
-                        <SelectItem value="Bamboo">Bamboo (Baans)</SelectItem>
-                        <SelectItem value="Banana / Plantain">Banana Plant (Kela)</SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Fruit Trees
-                        </SelectLabel>
-                        <SelectItem value="Mango">Mango Tree (Aam - Alphonso/Kesar)</SelectItem>
-                        <SelectItem value="Guava">Guava Tree (Amrood)</SelectItem>
-                        <SelectItem value="Papaya">Papaya Plant (Papita)</SelectItem>
-                        <SelectItem value="Lemon / Acid Lime">Lemon / Lime (Nimbu)</SelectItem>
-                        <SelectItem value="Pomegranate">Pomegranate (Anaar)</SelectItem>
-                        <SelectItem value="Jackfruit">Jackfruit Tree (Kathal)</SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Garden & Flowering Plants
-                        </SelectLabel>
-                        <SelectItem value="Hibiscus / Gudhal">Hibiscus (Gudhal / Jaswand)</SelectItem>
-                        <SelectItem value="Jasmine / Mogra">Jasmine (Mogra / Chameli)</SelectItem>
-                        <SelectItem value="Rose / Gulab">Rose (Gulab)</SelectItem>
-                        <SelectItem value="Marigold / Genda">Marigold (Genda)</SelectItem>
-                        <SelectItem value="Bougainvillea">Bougainvillea</SelectItem>
-                        <SelectItem value="Plumeria / Champa">Champa (Plumeria)</SelectItem>
-                        <SelectItem value="Lotus / Kamal">Lotus (Kamal)</SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Kitchen Spices
-                        </SelectLabel>
-                        <SelectItem value="Curry Leaf">Curry Leaf (Kadi Patta)</SelectItem>
-                        <SelectItem value="Cardamom">Cardamom (Elaichi)</SelectItem>
-                        <SelectItem value="Turmeric">Turmeric (Haldi)</SelectItem>
-                        <SelectItem value="Black Pepper">Black Pepper (Kali Mirch)</SelectItem>
-                        <SelectItem value="Cinnamon">Cinnamon (Dalchini)</SelectItem>
-                        <SelectItem value="Clove">Clove (Laung)</SelectItem>
-                        <SelectItem value="Ginger">Ginger (Adrak)</SelectItem>
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Medicinal & Courtyard Plants
-                        </SelectLabel>
-                        <SelectItem value="Tulsi">Tulsi (Holy Basil)</SelectItem>
-                        <SelectItem value="Neem">Neem Tree</SelectItem>
-                        <SelectItem value="Aloe Vera">Aloe Vera (Ghritkumari)</SelectItem>
-                        <SelectItem value="Giloy">Giloy (Guduchi Vine)</SelectItem>
-                        <SelectItem value="Brahmi">Brahmi (Water Hyssop)</SelectItem>
-                        <SelectItem value="Shatavari">Shatavari (Wild Asparagus)</SelectItem>
-                        <SelectItem value="Kalmegh">Kalmegh (King of Bitters)</SelectItem>
-                        <SelectItem value="Vasaka">Vasaka / Adhatoda (Vasa)</SelectItem>
-                        <SelectItem value="Money Plant">Money Plant (Pothos)</SelectItem>
-                      </SelectGroup>
+                      {Object.entries(plantGroups).map(([groupName, items]) => (
+                        <SelectGroup key={groupName}>
+                          <SelectLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                            {groupName}
+                          </SelectLabel>
+                          {items.map((p) => (
+                            <SelectItem key={p.scientific_name} value={p.name}>
+                              {p.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ))}
                     </SelectContent>
                   </Select>
 
