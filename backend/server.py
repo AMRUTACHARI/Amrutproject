@@ -23,7 +23,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from emailer import send_email, verification_email, reset_email, digest_email
-from plant_ai import analyze_plant, SPICE_KNOWLEDGE
+from plant_ai import analyze_plant, SPICE_KNOWLEDGE, EXPANDED_BOTANICAL_KNOWLEDGE
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -523,10 +523,39 @@ async def my_history(user: dict = Depends(get_current_user)):
     return {"scans": scans}
 
 
-# ----------------------------- scan routes -----------------------------
+# ----------------------------- scan & botanical routes -----------------------------
 @api_router.get("/spices")
 async def list_spices():
     return {"spices": SPICE_KNOWLEDGE}
+
+
+@api_router.get("/plants")
+async def list_plants():
+    """Retrieve full botanical catalog from the database."""
+    plants = await db.plants.find({}, {"_id": 0}).sort("name", 1).to_list(100)
+    if not plants:
+        plants = EXPANDED_BOTANICAL_KNOWLEDGE
+    return {"plants": plants, "count": len(plants)}
+
+
+@api_router.get("/plants/{identifier}")
+async def get_plant(identifier: str):
+    """Retrieve single botanical record by stem, name, or alias."""
+    target = identifier.lower().strip()
+    plant = await db.plants.find_one({
+        "$or": [
+            {"stem": target},
+            {"name": {"$regex": f"^{target}", "$options": "i"}},
+            {"scientific_name": {"$regex": f"^{target}", "$options": "i"}},
+            {"aliases": target},
+        ]
+    }, {"_id": 0})
+    if not plant:
+        # Check in memory fallback
+        plant = next((p for p in EXPANDED_BOTANICAL_KNOWLEDGE if p.get("stem") == target or target in p.get("name", "").lower()), None)
+    if not plant:
+        raise HTTPException(status_code=404, detail="Plant not found in database.")
+    return {"plant": plant}
 
 
 @api_router.post("/scans")
@@ -539,6 +568,8 @@ async def create_scan(payload: ScanIn, user: dict = Depends(get_current_user)):
     doc = {
         "id": scan_id, "user_id": str(user["_id"]),
         "plant_name": result.get("plant_name") or payload.plant_name,
+        "kannada_name": result.get("kannada_name", ""),
+        "tamil_name": result.get("tamil_name", result.get("kannada_name", "")),
         "scientific_name": result.get("scientific_name", ""),
         "plant_family": result.get("plant_family", ""),
         "plant_role": result.get("plant_role", ""),
@@ -742,6 +773,31 @@ async def seed_admin():
         await db.users.update_one({"email": admin_email}, {"$set": update})
 
 
+async def seed_plants():
+    """Seed or synchronize the complete 45-species Indian subcontinent botanical library into MongoDB."""
+    for p in EXPANDED_BOTANICAL_KNOWLEDGE:
+        doc = {
+            "stem": p.get("stem"),
+            "name": p.get("name"),
+            "kannada_name": p.get("kannada_name", ""),
+            "tamil_name": p.get("tamil_name", p.get("kannada_name", "")),
+            "scientific_name": p.get("scientific_name", ""),
+            "family": p.get("family", ""),
+            "category": p.get("category", ""),
+            "role": p.get("role", ""),
+            "description": p.get("description", ""),
+            "common_issues": p.get("common_issues", []),
+            "problem_cause": p.get("problem_cause", ""),
+            "remedies": p.get("remedies", []),
+            "precautions": p.get("precautions", []),
+            "aliases": p.get("aliases", []),
+            "updated_at": now_utc().isoformat(),
+        }
+        await db.plants.replace_one({"stem": p["stem"]}, doc, upsert=True)
+    count = await db.plants.count_documents({})
+    logger.info(f"Seeded and synchronized {count} botanical species in MongoDB database.")
+
+
 @app.on_event("startup")
 async def on_startup():
     await db.users.create_index("email", unique=True)
@@ -755,7 +811,10 @@ async def on_startup():
     await db.scans.create_index("user_id")
     await db.scans.create_index("id", unique=True)
     await db.cron_runs.create_index("at", expireAfterSeconds=604800)
+    await db.plants.create_index("stem", unique=True)
+    await db.plants.create_index("name")
     await seed_admin()
+    await seed_plants()
     logger.info("FLORAai backend ready.")
 
 

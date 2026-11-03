@@ -27,6 +27,7 @@ export function statusColor(status) {
   if (status === "Unknown") return "text-muted-foreground bg-muted border-border";
   if (status === "Deficiency") return "text-amber-600 bg-amber-500/10 border-amber-500/20";
   if (status === "Pest Infestation") return "text-rose-600 bg-rose-500/10 border-rose-500/20";
+  if (status === "Powdery Mildew") return "text-indigo-600 bg-indigo-500/10 border-indigo-500/20";
   return "text-[hsl(14_62%_48%)] bg-[hsl(14_62%_48%)]/10 border-[hsl(14_62%_48%)]/20";
 }
 
@@ -291,6 +292,12 @@ export function ScanResult({ scan }) {
                   >
                     {scan.plant_name || "Your Plant"}
                   </h3>
+
+                  {(scan.kannada_name || scan.tamil_name) && (
+                    <p className="font-mono text-sm font-semibold text-accent mt-0.5">
+                      Kannada Nickname: {scan.kannada_name || scan.tamil_name}
+                    </p>
+                  )}
 
                   {scan.scientific_name && (
                     <p className="font-serif italic text-sm text-muted-foreground mt-0.5">

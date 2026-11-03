@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-const STATUSES = ["All", "Healthy", "Leaf Spot", "Blight", "Root Rot", "Deficiency", "Pest Infestation", "Viral", "Wilt", "Unknown"];
+const STATUSES = ["All", "Healthy", "Leaf Spot", "Blight", "Powdery Mildew", "Root Rot", "Deficiency", "Pest Infestation", "Viral", "Wilt", "Unknown"];
 
 export default function HistoryPage() {
   const [params] = useSearchParams();

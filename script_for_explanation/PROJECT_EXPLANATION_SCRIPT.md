@@ -201,7 +201,7 @@ Phase 6: High-Availability Deterministic Offline Fallback Engine
 > **Answer:** The project contains production multi-stage Dockerfiles for both frontend (using Nginx alpine to serve static assets) and backend (Python 3.10 slim), orchestrated via a single `docker-compose.yml` file that launches MongoDB, FastAPI, and React in isolated network containers with persistent data volumes.
 
 ### Q10: What future enhancements are planned for FLORAai?
-> **Answer:** Future iterations will include: (1) Voice-assisted regional audio output in Hindi, Marathi, and Tamil for rural farmers; (2) An on-device quantized TensorFlow Lite model for 100% offline edge inference on low-cost smartphones; and (3) IoT soil-sensor telemetry integration.
+> **Answer:** Future iterations will include: (1) Voice-assisted regional audio output in Kannada, Hindi, and regional languages for rural farmers; (2) An on-device quantized TensorFlow Lite model for 100% offline edge inference on low-cost smartphones; and (3) IoT soil-sensor telemetry integration.
 
 ---
 

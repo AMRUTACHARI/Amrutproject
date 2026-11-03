@@ -40,49 +40,82 @@ export { REAL_PLANT_PHOTOS, getPlantImage };
 
 const INTERACTIVE_SPECIMENS = [
   {
-    id: "curry-leaf",
-    name: "Curry Leaf Plant",
-    scientific: "Murraya koenigii (Kadi Patta)",
-    part: "Leaves & Shoot Tips",
-    status: "Pest Infestation",
-    healthScore: 54,
-    confidence: 94,
-    sampleImage: REAL_PLANT_PHOTOS["Curry Leaf"],
-    diagnosis: "Tiny sap-sucking bugs found on leaf tips, causing leaf curling and sticky dark spots.",
-    issues: ["Tiny Leaf Bugs", "Curling Leaf Tips", "Black Powder on Leaves"],
-    remedies: [
-      "Spray 1 tsp organic neem oil mixed with mild liquid soap and water in the evening.",
-      "Gently rinse off insect colonies with a garden spray of clean water.",
-      "Prune back heavily damaged curled shoots so fresh fragrant leaves emerge.",
-    ],
-  },
-  {
     id: "coconut",
-    name: "Coconut Palm",
-    scientific: "Cocos nucifera (Nariyal)",
+    name: "Coconut Palm (Thennai)",
+    scientific: "Cocos nucifera (Nariyal / தென்னை)",
     part: "Crown Fronds & Spindle",
     status: "Leaf Spot",
-    healthScore: 68,
-    confidence: 92,
+    healthScore: 65,
+    confidence: 94,
     sampleImage: REAL_PLANT_PHOTOS["Coconut Palm"],
-    diagnosis: "Brown oval spots observed on outer fronds caused by monsoon dampness. The center spear leaf remains firm and healthy.",
-    issues: ["Brown Leaf Spots", "Moisture Stress", "Nutrient Wear"],
+    diagnosis: "Brown necrotic fungal spots observed on outer fronds caused by monsoon dampness. The center spear leaf remains firm and healthy.",
+    issues: ["Brown Leaf Spots", "Moisture Fungal Lesions", "Tissue Necrosis"],
     remedies: [
-      "Spray 1% organic Bordeaux mixture or copper solution over affected lower leaves.",
-      "Add 1 kg organic wood ash or potash around the palm basin to strengthen frond cell walls.",
+      "Spray 1% organic Bordeaux mixture or copper oxychloride solution over affected lower fronds.",
+      "Add 1 to 2 kg organic wood ash or potash around the palm basin to strengthen frond cell walls.",
       "Ensure rainwater drains away freely from the base of the trunk.",
     ],
   },
   {
+    id: "bismarck",
+    name: "Bismarck Palm (Silver Fan)",
+    scientific: "Bismarckia nobilis (வெள்ளி விசிறி பனை)",
+    part: "Silver Blue Fan Fronds",
+    status: "Healthy",
+    healthScore: 95,
+    confidence: 96,
+    sampleImage: REAL_PLANT_PHOTOS["Bismarck Palm"],
+    diagnosis: "Vigorous architectural silver-blue fan fronds with pristine waxy coating and robust radial symmetry.",
+    issues: ["Optimal silver wax bloom", "Stout trunk vigor", "No leaf spot lesions"],
+    remedies: [
+      "Water exclusively at soil level with drip irrigation; avoid sprinkler splash on silver leaves.",
+      "Apply slow-release palm fertilizer rich in potassium and magnesium sulfate twice yearly.",
+    ],
+  },
+  {
+    id: "lipstick",
+    name: "Lipstick Palm (Sealing Wax)",
+    scientific: "Cyrtostachys renda (சிவப்பு பனை)",
+    part: "Scarlet Crownshaft & Fronds",
+    status: "Deficiency",
+    healthScore: 70,
+    confidence: 93,
+    sampleImage: REAL_PLANT_PHOTOS["Lipstick Palm"],
+    diagnosis: "Mild tip drying and slight fading of scarlet crownshaft due to low humidity in dry air.",
+    issues: ["Brown frond tips", "Dry air stress", "Moisture sensitivity"],
+    remedies: [
+      "Mist fronds daily with soft water or maintain a pebble humidity tray at the base.",
+      "Keep potting soil consistently moist; never allow root ball to dry out.",
+      "Feed monthly during monsoon with diluted organic seaweed extract.",
+    ],
+  },
+  {
+    id: "paddy",
+    name: "Rice / Paddy (Nel)",
+    scientific: "Oryza sativa (Dhan / நெல்)",
+    part: "Tillers & Leaf Blades",
+    status: "Blight",
+    healthScore: 58,
+    confidence: 95,
+    sampleImage: REAL_PLANT_PHOTOS["Rice / Paddy"],
+    diagnosis: "Spindle-shaped fungal lesions and yellowing leaf blight along blade margins caused by overcast humidity.",
+    issues: ["Paddy blast fungal lesions", "Yellow leaf margin blight", "Overcast humidity stress"],
+    remedies: [
+      "Spray bio-fungicide (Pseudomonas fluorescens 10g/L) or neem seed kernel extract (NSKE 5%).",
+      "Drain field standing water for 24-48 hours to aerate soil and break pathogen cycle.",
+      "Incorporate organic vermicompost and reduce synthetic nitrogen fertilizer.",
+    ],
+  },
+  {
     id: "mango",
-    name: "Mango Tree",
-    scientific: "Mangifera indica (Aam - Alphonso)",
+    name: "Mango Tree (Maamaram)",
+    scientific: "Mangifera indica (Aam / மாமரம்)",
     part: "Young Leaves & Twigs",
     status: "Blight",
     healthScore: 62,
     confidence: 95,
-    sampleImage: REAL_PLANT_PHOTOS["Mango"],
-    diagnosis: "Dark irregular spots on leaf tips caused by fungal spores during cloudy, humid weather.",
+    sampleImage: REAL_PLANT_PHOTOS["Mango Tree"],
+    diagnosis: "Dark irregular anthracnose spots on leaf tips caused by fungal spores during cloudy, humid weather.",
     issues: ["Dark Leaf Spots", "Tip Drying", "Humid Weather Stress"],
     remedies: [
       "Spray copper oxychloride (3g per liter) or organic neem extract on foliage.",
@@ -91,48 +124,95 @@ const INTERACTIVE_SPECIMENS = [
     ],
   },
   {
-    id: "hibiscus",
-    name: "Hibiscus / Gudhal",
-    scientific: "Hibiscus rosa-sinensis",
-    part: "Flower Buds & Leaves",
-    status: "Pest Infestation",
-    healthScore: 48,
-    confidence: 96,
-    sampleImage: REAL_PLANT_PHOTOS["Hibiscus"],
-    diagnosis: "White cottony bugs (mealybugs) clustered near flower buds and leaf joints, causing bud drop.",
-    issues: ["White Cottony Mealybugs", "Bud Drop", "Sticky Sap"],
+    id: "aloe",
+    name: "Aloe Vera (Katralai)",
+    scientific: "Aloe barbadensis (சோற்றுக்கற்றாழை)",
+    part: "Succulent Gel Leaves",
+    status: "Healthy",
+    healthScore: 96,
+    confidence: 97,
+    sampleImage: REAL_PLANT_PHOTOS["Aloe Vera"],
+    diagnosis: "Firm, thick upright succulent leaves packed with clear healing gel and healthy glaucous color.",
+    issues: ["Firm turgid leaves", "Robust root base", "No soft rot"],
     remedies: [
-      "Wipe clusters off with a cotton swab dipped in rubbing alcohol, or spray with soapy neem solution.",
-      "Rinse stems with a firm spray of clean water.",
-      "Move the plant to a spot with at least 5 to 6 hours of bright direct sunshine daily.",
+      "Water sparingly only when top 2 inches of soil feel completely dry.",
+      "Ensure container has open bottom drainage holes to prevent root rot.",
     ],
   },
   {
-    id: "turmeric",
-    name: "Turmeric Plant",
-    scientific: "Curcuma longa (Haldi)",
-    part: "Healthy Foliage & Stem",
+    id: "tulsi",
+    name: "Tulsi (Holy Basil)",
+    scientific: "Ocimum sanctum (Thulasi / துளசி)",
+    part: "Aromatic Fragrant Leaves",
+    status: "Healthy",
+    healthScore: 94,
+    confidence: 96,
+    sampleImage: REAL_PLANT_PHOTOS["Tulsi"],
+    diagnosis: "Fragrant, vibrant purple-green foliage with vigorous branching and abundant fresh essential oils.",
+    issues: ["Healthy fragrant foliage", "Active vegetative shoot growth", "No leaf spots"],
+    remedies: [
+      "Pinch off dry seed heads regularly to encourage bushy, dense leaf growth.",
+      "Water directly at the soil base in the morning, keeping fragrant leaves dry.",
+    ],
+  },
+  {
+    id: "curry-leaf",
+    name: "Curry Leaf Plant",
+    scientific: "Murraya koenigii (Kariveppilai / கறிவேப்பிலை)",
+    part: "Leaves & Shoot Tips",
+    status: "Pest Infestation",
+    healthScore: 54,
+    confidence: 94,
+    sampleImage: REAL_PLANT_PHOTOS["Curry Leaf"],
+    diagnosis: "Tiny sap-sucking bugs found on leaf tips, causing leaf curling and sticky dark spots.",
+    issues: ["Tiny Leaf Bugs", "Curling Leaf Tips", "Black Powder on Leaves"],
+    remedies: [
+      "Spray 5 ml cold-pressed neem oil mixed with mild liquid soap and water in the evening.",
+      "Gently rinse off insect colonies with a garden spray of clean water.",
+      "Prune back heavily damaged curled shoots so fresh fragrant leaves emerge.",
+    ],
+  },
+  {
+    id: "tomato",
+    name: "Tomato (Tamota)",
+    scientific: "Solanum lycopersicum (Tamatar / ಟೊಮೆಟೊ)",
+    part: "Foliage & Developing Fruit",
+    status: "Blight",
+    healthScore: 60,
+    confidence: 95,
+    sampleImage: REAL_PLANT_PHOTOS["Tomato"],
+    diagnosis: "Concentric brown fungal target spots and leaf margin yellowing observed on lower tomato foliage caused by early blight.",
+    issues: ["Early Blight Target Spots", "Foliar Margin Yellowing", "Monsoon Moisture Stress"],
+    remedies: [
+      "Prune off lower foliage touching damp soil to halt fungal spore splash.",
+      "Spray 5 ml cold-pressed neem oil or mild copper fungicide weekly during rainy periods.",
+      "Water strictly at the soil base in the morning and avoid wetting tomato leaves.",
+    ],
+  },
+  {
+    id: "money-plant",
+    name: "Money Plant (Pothos)",
+    scientific: "Epipremnum aureum (Mani Plant / ಮನಿ ಪ್ಲಾಂಟ್)",
+    part: "Variegated Heart Leaves",
     status: "Healthy",
     healthScore: 96,
-    confidence: 98,
-    sampleImage: REAL_PLANT_PHOTOS["Turmeric"],
-    diagnosis: "Completely healthy plant. Deep green leaves with smooth edges and vibrant vegetative growth.",
-    issues: ["Healthy green leaves", "Strong Root Vigor"],
+    confidence: 96,
+    sampleImage: REAL_PLANT_PHOTOS["Money Plant"] || "/plants/money_plant.jpg",
+    diagnosis: "Glossy heart-shaped foliage with healthy natural golden-yellow variegation and firm, vigorous aerial roots.",
+    issues: ["Glossy variegated foliage", "Active vining growth", "No leaf rot or spot lesions"],
     remedies: [
-      "Mulch soil around the plant with dry leaves to retain moisture.",
-      "Water moderately when top soil feels dry; avoid standing water.",
+      "Keep in bright indirect sunlight to maintain attractive golden leaf variegation.",
+      "Allow the top inch of potting soil to dry slightly before watering; avoid standing water in tray.",
+      "Wipe dust off leaves once every two weeks with a soft damp cloth.",
     ],
   },
 ];
 
 const GALLERY_TABS = [
-  { id: "all", label: "All Plants" },
-  { id: "palms", label: "Palms & Big Trees" },
-  { id: "spices", label: "Spices & Kitchen" },
-  { id: "medicinal", label: "Medicinal & Herbs" },
-  { id: "flowers", label: "Garden Flowers" },
-  { id: "fruits-trees", label: "Fruits & Orchards" },
-  { id: "indoor", label: "Indoor & Air-Purifying" },
+  { id: "all", label: "All 10 Species" },
+  { id: "palms", label: "Palms (Coconut, Bismarck, Lipstick)" },
+  { id: "crops", label: "Crops & Trees (Paddy, Mango, Neem)" },
+  { id: "medicinal", label: "Medicinal & Herbs (Tulsi, Aloe, Curry Leaf, Snake Plant)" },
 ];
 
 export default function Home() {
@@ -206,12 +286,37 @@ export default function Home() {
     if (selectedCategory === "all") return true;
     const cat = (plant.category || "").toLowerCase();
     const name = (plant.name || "").toLowerCase();
-    if (selectedCategory === "palms") return cat.includes("palm") || name.includes("palm") || cat.includes("wood") || name.includes("bamboo");
-    if (selectedCategory === "spices") return cat.includes("spice") || cat.includes("kitchen") || cat.includes("vegetable") || cat.includes("grain") || cat.includes("crop");
-    if (selectedCategory === "medicinal") return cat.includes("medicinal") || cat.includes("herb") || cat.includes("ayurvedic") || cat.includes("tonic");
-    if (selectedCategory === "flowers") return cat.includes("flower") || cat.includes("garden");
-    if (selectedCategory === "fruits-trees") return cat.includes("fruit") || cat.includes("tree") || cat.includes("orchard");
-    if (selectedCategory === "indoor") return cat.includes("indoor") || cat.includes("air") || cat.includes("foliage") || name.includes("snake") || name.includes("pothos") || name.includes("peace");
+    const stem = (plant.stem || "").toLowerCase();
+    if (selectedCategory === "palms") {
+      return (
+        ["coconut", "bismarck_palm", "lipstick_palm"].includes(stem) ||
+        cat.includes("palm") ||
+        name.includes("palm")
+      );
+    }
+    if (selectedCategory === "crops") {
+      return (
+        ["rice", "mango", "neem"].includes(stem) ||
+        cat.includes("crop") ||
+        cat.includes("tree") ||
+        cat.includes("fruit") ||
+        name.includes("rice") ||
+        name.includes("mango") ||
+        name.includes("neem")
+      );
+    }
+    if (selectedCategory === "medicinal") {
+      return (
+        ["tulsi", "aloe_vera", "curry_leaf", "snake_plant"].includes(stem) ||
+        cat.includes("medicinal") ||
+        cat.includes("spice") ||
+        cat.includes("indoor") ||
+        name.includes("tulsi") ||
+        name.includes("aloe") ||
+        name.includes("curry") ||
+        name.includes("snake")
+      );
+    }
     return true;
   });
 
@@ -614,7 +719,7 @@ export default function Home() {
               Signature Indian Subcontinent Species
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-xl">
-              Curated verified gallery of signature courtyard flowers, healing herbs, fruit trees, palms, and spices.
+              Curated minimalist gallery of 10 signature courtyard palms, staple crops, fruit trees, and healing herbs.
               Tap any card to view botanical profiles, common diseases, and natural home remedies.
             </p>
             <a
@@ -696,9 +801,16 @@ export default function Home() {
 
                   <div className="p-4 sm:p-5">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-serif text-base sm:text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                        {commonName}
-                      </h3>
+                      <div>
+                        <h3 className="font-serif text-base sm:text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                          {commonName}
+                        </h3>
+                        {(s.kannada_name || s.tamil_name) && (
+                          <p className="font-mono text-[11px] text-accent font-semibold mt-0.5">
+                            {s.kannada_name || s.tamil_name}
+                          </p>
+                        )}
+                      </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary shrink-0" />
                     </div>
 
@@ -745,6 +857,11 @@ export default function Home() {
               <DialogTitle className="font-serif text-xl sm:text-2xl font-medium mt-1">
                 {modalSpice.name}
               </DialogTitle>
+              {(modalSpice.kannada_name || modalSpice.tamil_name) && (
+                <div className="font-mono text-xs text-accent font-semibold mt-0.5">
+                  Kannada Nickname: {modalSpice.kannada_name || modalSpice.tamil_name}
+                </div>
+              )}
               <DialogDescription className="font-serif italic text-xs text-muted-foreground">
                 {modalSpice.scientific_name || modalSpice.name}
               </DialogDescription>

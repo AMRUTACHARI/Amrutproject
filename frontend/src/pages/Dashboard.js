@@ -42,18 +42,20 @@ import {
 import { toast } from "sonner";
 
 const QUICK_SAMPLE_PLANTS = [
-  { name: "Snake Plant (Mother-in-Law's Tongue)", label: "Snake Plant (Sansevieria)", url: "/plants/snake_plant.jpg", category: "Indoor" },
-  { name: "Curry Leaf (Kadi Patta)", label: "Curry Leaf (Kadi Patta)", url: "/plants/curry_leaf.jpg", category: "Spices" },
-  { name: "Coconut Palm (Nariyal)", label: "Coconut Palm (Nariyal)", url: "/plants/coconut.jpg", category: "Palms" },
-  { name: "Lipstick Palm (Sealing Wax Palm)", label: "Lipstick Palm (Sealing Wax)", url: "/plants/lipstick_palm.jpg", category: "Palms" },
-  { name: "Mango Tree (Aam)", label: "Mango Tree (Aam)", url: "/plants/mango.jpg", category: "Fruit" },
-  { name: "Hibiscus (Gudhal / Jaswand)", label: "Hibiscus (Gudhal)", url: "/plants/hibiscus.jpg", category: "Garden" },
-  { name: "Tulsi (Holy Basil)", label: "Tulsi (Holy Basil)", url: "/plants/tulsi.jpg", category: "Medicinal" },
-  { name: "Turmeric (Haldi)", label: "Turmeric (Haldi)", url: "/plants/turmeric.jpg", category: "Spices" },
-  { name: "Neem Tree", label: "Neem Tree", url: "/plants/neem.jpg", category: "Medicinal" },
-  { name: "Lemon Tree (Nimbu)", label: "Lemon Tree (Nimbu)", url: "/plants/lemon.jpg", category: "Fruit" },
-  { name: "Guava Tree (Amrood)", label: "Guava Tree (Amrood)", url: "/plants/guava.jpg", category: "Fruit" },
-  { name: "Aloe Vera (Ghritkumari)", label: "Aloe Vera (Ghritkumari)", url: "/plants/aloe_vera.jpg", category: "Medicinal" },
+  { name: "Coconut Palm (Tengina Mara / Nariyal)", label: "Coconut (ತೆಂಗಿನ ಮರ)", url: "/plants/coconut.jpg", category: "Palms" },
+  { name: "Rose (Gulabi Gida / Rosa)", label: "Rose (ಗುಲಾಬಿ ಗಿಡ)", url: "/plants/rose.jpg", category: "Flowers" },
+  { name: "Bismarck Palm (Silver Fan Palm)", label: "Bismarck Palm (ಬೆಳ್ಳಿ ತಾಳೆ)", url: "/plants/bismarck_palm.jpg", category: "Palms" },
+  { name: "Lipstick Palm (Sealing Wax Palm)", label: "Lipstick Palm (ಕೆಂಪು ತಾಳೆ)", url: "/plants/lipstick_palm.jpg", category: "Palms" },
+  { name: "Badam Plant (Indian Almond / Badami Gida)", label: "Badam Plant (ಬಾದಾಮಿ ಗಿಡ)", url: "/plants/badam.jpg", category: "Trees" },
+  { name: "Tulsi (Holy Basil / Thulasi)", label: "Tulsi (ತುಳಸಿ)", url: "/plants/tulsi.jpg", category: "Medicinal" },
+  { name: "Neem Tree (Bevina Mara / Margosa)", label: "Neem Tree (ಬೇವಿನ ಮರ)", url: "/plants/neem.jpg", category: "Medicinal" },
+  { name: "Mango Tree (Mavina Mara / Aam)", label: "Mango Tree (ಮಾವಿನ ಮರ)", url: "/plants/mango.jpg", category: "Fruit" },
+  { name: "Snake Plant (Haavu Gida / Sansevieria)", label: "Snake Plant (ಹಾವು ಗಿಡ)", url: "/plants/snake_plant.jpg", category: "Indoor" },
+  { name: "Rice / Paddy (Bhattada Gadde / Nel)", label: "Paddy (ಭತ್ತದ ಗದ್ದೆ)", url: "/plants/rice.jpg", category: "Staple" },
+  { name: "Tomato (Tamota / Tamatar)", label: "Tomato (ಟೊಮೆಟೊ)", url: "/plants/tomato.jpg", category: "Vegetables" },
+  { name: "Money Plant (Mani Plant / Pothos)", label: "Money Plant (ಮನಿ ಪ್ಲಾಂಟ್)", url: "/plants/money_plant.jpg", category: "Indoor" },
+  { name: "Aloe Vera (Lolesara / Ghritkumari)", label: "Aloe Vera (ಲೋಳೆಸರ)", url: "/plants/aloe_vera.jpg", category: "Medicinal" },
+  { name: "Curry Leaf (Karibevu / Kadi Patta)", label: "Curry Leaf (ಕರಿಬೇವು)", url: "/plants/curry_leaf.jpg", category: "Spices" },
 ];
 
 export default function Dashboard() {
@@ -317,7 +319,7 @@ export default function Dashboard() {
                         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
                           Try with sample plant photos:
                         </p>
-                        <span className="font-mono text-[9px] text-muted-foreground">9 verified presets</span>
+                        <span className="font-mono text-[9px] text-muted-foreground">14 verified presets</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {QUICK_SAMPLE_PLANTS.map((sp) => (
@@ -403,7 +405,7 @@ export default function Dashboard() {
                           </SelectLabel>
                           {items.map((p) => (
                             <SelectItem key={p.scientific_name} value={p.name}>
-                              {p.name}
+                              {p.kannada_name ? `${p.kannada_name} · ${p.name}` : p.name}
                             </SelectItem>
                           ))}
                         </SelectGroup>

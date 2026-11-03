@@ -781,7 +781,7 @@ def build_explanation_pdf():
         ),
         (
             "Q10: What future enhancements are planned for FLORAai?",
-            "Ans: Future iterations will include: (1) Voice-assisted regional audio output in Hindi, Marathi, and Tamil for rural farmers; (2) An on-device quantized TensorFlow Lite model for 100% offline edge inference on low-cost smartphones; and (3) IoT soil-sensor telemetry integration.",
+            "Ans: Future iterations will include: (1) Voice-assisted regional audio output in Kannada, Hindi, and regional languages for rural farmers; (2) An on-device quantized TensorFlow Lite model for 100% offline edge inference on low-cost smartphones; and (3) IoT soil-sensor telemetry integration.",
         ),
     ]
 
