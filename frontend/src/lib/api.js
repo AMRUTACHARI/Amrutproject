@@ -1,8 +1,35 @@
 import axios from "axios";
 
-const rawUrl = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = rawUrl && rawUrl !== "undefined" ? rawUrl.replace(/\/+$/, "") : "";
-export const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
+export function resolveApiBaseUrl() {
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    const isLocalhost =
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname.endsWith(".local");
+
+    // In production, when hosted on Vercel, or over HTTPS, ALWAYS use relative "/api"
+    // to prevent browser Mixed Content blocks and ensure Vercel rewrites handle it.
+    if (!isLocalhost || window.location.protocol === "https:") {
+      return "/api";
+    }
+
+    // In local development on HTTP localhost, use backend port if set or fallback to 8001
+    const rawUrl = process.env.REACT_APP_BACKEND_URL;
+    if (rawUrl && rawUrl !== "undefined" && rawUrl.trim() !== "") {
+      return `${rawUrl.replace(/\/+$/, "")}/api`;
+    }
+    return "http://localhost:8001/api";
+  }
+
+  const rawUrl = process.env.REACT_APP_BACKEND_URL;
+  if (rawUrl && rawUrl !== "undefined" && rawUrl.trim() !== "") {
+    return `${rawUrl.replace(/\/+$/, "")}/api`;
+  }
+  return "/api";
+}
+
+export const API = resolveApiBaseUrl();
 
 const api = axios.create({
   baseURL: API,
