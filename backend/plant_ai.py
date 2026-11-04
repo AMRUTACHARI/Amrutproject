@@ -7,14 +7,24 @@ import base64
 import io
 import httpx
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 from dotenv import load_dotenv
 from pathlib import Path
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torchvision.models as models
-from torchvision import transforms
+
+try:
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    import torchvision.models as models
+    from torchvision import transforms
+    TORCH_AVAILABLE = True
+except Exception as e:
+    torch = None
+    nn = None
+    F = None
+    models = None
+    transforms = None
+    TORCH_AVAILABLE = False
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
@@ -1798,7 +1808,7 @@ class FloraDualNet(nn.Module):
         pathology_logits = self.pathology_head(feat)
         return feat_norm, species_logits, pathology_logits
 
-_DEVICE = torch.device("cpu")
+_DEVICE = torch.device("cpu") if TORCH_AVAILABLE else None
 _DUAL_NET = None
 _PROTOTYPE_EMBEDDINGS = None
 _STEM_LIST = [p["stem"] for p in EXPANDED_BOTANICAL_KNOWLEDGE]
@@ -1815,11 +1825,13 @@ _TRANSFORM = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
+]) if TORCH_AVAILABLE else None
 
 def _init_vision_model():
     """Lazy load FloraDualNet neural classifier and prototype embeddings for all 45 flora species."""
     global _DUAL_NET, _PROTOTYPE_EMBEDDINGS
+    if not TORCH_AVAILABLE:
+        return
     if _DUAL_NET is None:
         try:
             backbone = models.mobilenet_v3_small(weights=None)
@@ -1846,6 +1858,8 @@ def _init_vision_model():
 
 def _extract_deep_features(pil_im: Image.Image):
     """Extract deep normalized embeddings and neural logits for species and pathology."""
+    if not TORCH_AVAILABLE or _TRANSFORM is None:
+        return np.zeros(576, dtype=np.float32), None, None
     _init_vision_model()
     if _DUAL_NET is None:
         return np.zeros(576, dtype=np.float32), None, None
@@ -1970,8 +1984,13 @@ def _fallback_result(plant_name: str, image_base64: str = "") -> dict:
 
         # Average pool leaf density to capture the authentic foliage canopy
         # This guarantees brown lesions are evaluated inside the leaf canopy and excludes potting soil or tables
-        t_leaf = torch.from_numpy(green_leaf).float().unsqueeze(0).unsqueeze(0)
-        leaf_density = F.avg_pool2d(t_leaf, kernel_size=15, stride=1, padding=7).squeeze().numpy()
+        if TORCH_AVAILABLE and torch is not None and F is not None:
+            t_leaf = torch.from_numpy(green_leaf).float().unsqueeze(0).unsqueeze(0)
+            leaf_density = F.avg_pool2d(t_leaf, kernel_size=15, stride=1, padding=7).squeeze().numpy()
+        else:
+            im_mask = Image.fromarray((green_leaf * 255).astype(np.uint8))
+            blur_mask = im_mask.filter(ImageFilter.BoxBlur(7))
+            leaf_density = np.asarray(blur_mask, dtype=np.float32) / 255.0
         in_leaf_canopy = (leaf_density > 0.25) | green_leaf
 
         # Shadow exclusion filter (excludes deep black room/foliage shadows)
