@@ -19,6 +19,8 @@ import jwt
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import FastAPI, APIRouter, Request, Response, Depends, HTTPException, status, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field, field_validator
@@ -1039,3 +1041,25 @@ async def on_startup():
 @app.on_event("shutdown")
 async def shutdown():
     client.close()
+
+
+# ----------------------------- SPA Frontend Static Serving -----------------------------
+STATIC_BUILD_DIR = ROOT_DIR / "static_build"
+if not STATIC_BUILD_DIR.exists():
+    STATIC_BUILD_DIR = ROOT_DIR.parent / "frontend" / "build"
+
+if STATIC_BUILD_DIR.exists():
+    if (STATIC_BUILD_DIR / "static").exists():
+        app.mount("/static", StaticFiles(directory=str(STATIC_BUILD_DIR / "static")), name="static_assets")
+    if (STATIC_BUILD_DIR / "plants").exists():
+        app.mount("/plants", StaticFiles(directory=str(STATIC_BUILD_DIR / "plants")), name="plant_images")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa_frontend(full_path: str):
+        target = STATIC_BUILD_DIR / full_path
+        if target.exists() and target.is_file():
+            return FileResponse(target)
+        index_file = STATIC_BUILD_DIR / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        return {"message": "FLORAai API", "status": "ok"}
