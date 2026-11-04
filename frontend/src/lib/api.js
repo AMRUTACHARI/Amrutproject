@@ -46,7 +46,7 @@ api.interceptors.response.use(
 );
 
 export function formatApiErrorDetail(detail) {
-  if (detail == null) return "Something went wrong. Please try again.";
+  if (detail == null) return null;
   if (typeof detail === "string") return detail;
   if (Array.isArray(detail))
     return detail
@@ -58,7 +58,17 @@ export function formatApiErrorDetail(detail) {
 }
 
 export function apiError(e) {
-  return formatApiErrorDetail(e?.response?.data?.detail) || e?.message || "Request failed.";
+  const detail = formatApiErrorDetail(e?.response?.data?.detail);
+  if (detail) return detail;
+  if (e?.response?.data?.message) return String(e.response.data.message);
+  if (typeof e?.response?.data === "string" && e.response.data.length > 0 && e.response.data.length < 200) {
+    return e.response.data;
+  }
+  if (e?.response?.status) {
+    return `Server error (${e.response.status}): ${e.response.statusText || "Request failed"}`;
+  }
+  if (e?.message) return e.message;
+  return "Something went wrong. Please try again.";
 }
 
 export default api;

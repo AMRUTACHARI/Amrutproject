@@ -43,7 +43,7 @@ COOKIE_SECURE = os.environ.get("COOKIE_SECURE", "true" if IS_VERCEL else "false"
 COOKIE_SAMESITE = os.environ.get("COOKIE_SAMESITE", "lax")
 
 app = FastAPI(title="FLORAai API")
-api_router = APIRouter(prefix="/api")
+api_router = APIRouter()
 
 
 # ----------------------------- helpers -----------------------------
@@ -763,11 +763,24 @@ async def root():
     return {"message": "FLORAai API", "status": "ok"}
 
 
+# Mount routes both with /api prefix and at root for seamless monorepo rewrite handling
+app.include_router(api_router, prefix="/api")
 app.include_router(api_router)
+
+cors_origins_env = os.environ.get("CORS_ORIGINS", "")
+configured_origins = [o.strip() for o in cors_origins_env.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "http://localhost:3000"],
+    allow_origins=[
+        FRONTEND_URL,
+        "http://localhost:3000",
+        "http://localhost:8001",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:8001",
+        *configured_origins,
+    ],
+    allow_origin_regex=r"^https?://([a-zA-Z0-9-]+\.)*vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
