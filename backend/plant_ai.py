@@ -1776,39 +1776,43 @@ def _normalize_status(raw_status: str) -> str:
     ]
     return next((status for status, keywords in mapping if any(k in s_lower for k in keywords)), "Unknown")
 
-class FloraDualNet(nn.Module):
-    """Dual-head neural classifier: Species Identification + Foliar Pathology Recognition."""
-    def __init__(self, backbone, num_species: int = 45, num_conditions: int = 6):
-        super().__init__()
-        self.backbone = backbone
-        self.backbone.classifier = nn.Identity()
+if TORCH_AVAILABLE and nn is not None:
+    class FloraDualNet(nn.Module):
+        """Dual-head neural classifier: Species Identification + Foliar Pathology Recognition."""
+        def __init__(self, backbone, num_species: int = 45, num_conditions: int = 6):
+            super().__init__()
+            self.backbone = backbone
+            self.backbone.classifier = nn.Identity()
 
-        # Species head: Maps invariant deep features to species classes
-        self.species_head = nn.Sequential(
-            nn.Linear(576, 256),
-            nn.BatchNorm1d(256),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(256, num_species),
-        )
+            # Species head: Maps invariant deep features to species classes
+            self.species_head = nn.Sequential(
+                nn.Linear(576, 256),
+                nn.BatchNorm1d(256),
+                nn.ReLU(),
+                nn.Dropout(0.2),
+                nn.Linear(256, num_species),
+            )
 
-        # Pathology head: Maps features to foliar health condition
-        self.pathology_head = nn.Sequential(
-            nn.Linear(576, 128),
-            nn.BatchNorm1d(128),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(128, num_conditions),
-        )
+            # Pathology head: Maps features to foliar health condition
+            self.pathology_head = nn.Sequential(
+                nn.Linear(576, 128),
+                nn.BatchNorm1d(128),
+                nn.ReLU(),
+                nn.Dropout(0.2),
+                nn.Linear(128, num_conditions),
+            )
 
-    def forward(self, x):
-        feat = self.backbone(x)
-        feat_norm = F.normalize(feat, p=2, dim=1)
-        species_logits = self.species_head(feat)
-        pathology_logits = self.pathology_head(feat)
-        return feat_norm, species_logits, pathology_logits
+        def forward(self, x):
+            feat = self.backbone(x)
+            feat_norm = F.normalize(feat, p=2, dim=1)
+            species_logits = self.species_head(feat)
+            pathology_logits = self.pathology_head(feat)
+            return feat_norm, species_logits, pathology_logits
+else:
+    class FloraDualNet:  # type: ignore
+        pass
 
-_DEVICE = torch.device("cpu") if TORCH_AVAILABLE else None
+_DEVICE = torch.device("cpu") if TORCH_AVAILABLE and torch is not None else None
 _DUAL_NET = None
 _PROTOTYPE_EMBEDDINGS = None
 _STEM_LIST = [p["stem"] for p in EXPANDED_BOTANICAL_KNOWLEDGE]
@@ -1821,11 +1825,14 @@ _CONDITIONS_LIST = [
     "Powdery Mildew",
 ]
 
-_TRANSFORM = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-]) if TORCH_AVAILABLE else None
+if TORCH_AVAILABLE and transforms is not None:
+    _TRANSFORM = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+else:
+    _TRANSFORM = None
 
 def _init_vision_model():
     """Lazy load FloraDualNet neural classifier and prototype embeddings for all 45 flora species."""
