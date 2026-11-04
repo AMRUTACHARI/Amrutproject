@@ -29,7 +29,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=5000)
 db = client[os.environ.get("DB_NAME", "test_database")]
 
 JWT_ALGORITHM = "HS256"
@@ -38,7 +38,8 @@ REFRESH_DAYS = 7
 MAX_FAILED = 5
 LOCKOUT_MINUTES = 15
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
-COOKIE_SECURE = os.environ.get("COOKIE_SECURE", "false").lower() in ("true", "1")
+IS_VERCEL = bool(os.environ.get("VERCEL") or os.environ.get("VERCEL_ENV"))
+COOKIE_SECURE = os.environ.get("COOKIE_SECURE", "true" if IS_VERCEL else "false").lower() in ("true", "1")
 COOKIE_SAMESITE = os.environ.get("COOKIE_SAMESITE", "lax")
 
 app = FastAPI(title="FLORAai API")
@@ -340,22 +341,40 @@ async def register(payload: RegisterIn, request: Request, response: Response):
 async def login(payload: LoginIn, request: Request, response: Response):
     email = payload.email.lower().strip()
     identifier = f"login:{email}"
-    await check_lockout(identifier)
-    doc = await db.users.find_one({"email": email})
+    try:
+        await check_lockout(identifier)
+        doc = await db.users.find_one({"email": email})
+        admin_email = os.environ.get("ADMIN_EMAIL", "admin@floraai.app").lower()
+        if not doc and email == admin_email:
+            # Auto-seed admin if database is newly initialized
+            await seed_admin()
+            doc = await db.users.find_one({"email": email})
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Login database error: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Database connection error. Please verify MONGO_URL in Vercel Environment Variables is connected to MongoDB Atlas."
+        )
+
     if not doc or doc.get("status") == "deleted" or not verify_password(payload.password, doc["password_hash"]):
         await register_failure(identifier)
         raise HTTPException(status_code=401, detail="Invalid email or password.")
     await clear_failures(identifier)
     uid = str(doc["_id"])
     jti = str(uuid.uuid4())
-    await db.sessions.insert_one({"jti": jti, "user_id": uid, "revoked": False,
-                                  "expires_at": now_utc() + timedelta(days=REFRESH_DAYS),
-                                  "created_at": now_utc().isoformat()})
+    try:
+        await db.sessions.insert_one({"jti": jti, "user_id": uid, "revoked": False,
+                                      "expires_at": now_utc() + timedelta(days=REFRESH_DAYS),
+                                      "created_at": now_utc().isoformat()})
+    except Exception as e:
+        logger.error(f"Failed to record session: {e}")
     access = create_access_token(uid, email, doc.get("role", "user"))
     refresh = create_refresh_token(uid, jti)
     set_auth_cookies(response, access, refresh)
     await audit("login", uid, request)
-    return {"user": public_user(doc), "message": "Logged in successfully."}
+    return {"user": public_user(doc), "token": access, "message": "Logged in successfully."}
 
 
 @api_router.post("/auth/refresh")

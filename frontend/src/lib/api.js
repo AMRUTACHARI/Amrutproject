@@ -1,11 +1,20 @@
 import axios from "axios";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-export const API = `${BACKEND_URL}/api`;
+const rawUrl = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = rawUrl && rawUrl !== "undefined" ? rawUrl.replace(/\/+$/, "") : "";
+export const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
 const api = axios.create({
   baseURL: API,
   withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("flora_token") : null;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 // Attempt a silent refresh once on 401, then retry the original request.

@@ -27,12 +27,18 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password, remember) => {
     const { data } = await api.post("/auth/login", { email, password, remember });
+    if (data.token) {
+      localStorage.setItem("flora_token", data.token);
+    }
     setUser(data.user);
     return data.user;
   };
 
   const register = async (payload) => {
     const { data } = await api.post("/auth/register", payload);
+    if (data.token) {
+      localStorage.setItem("flora_token", data.token);
+    }
     setUser(data.user);
     return data;
   };
@@ -43,6 +49,7 @@ export function AuthProvider({ children }) {
     } catch {
       /* ignore */
     }
+    localStorage.removeItem("flora_token");
     setUser(false);
   };
 
