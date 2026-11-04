@@ -28,9 +28,9 @@ from plant_ai import analyze_plant, SPICE_KNOWLEDGE, EXPANDED_BOTANICAL_KNOWLEDG
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-mongo_url = os.environ["MONGO_URL"]
+mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ["DB_NAME"]]
+db = client[os.environ.get("DB_NAME", "test_database")]
 
 JWT_ALGORITHM = "HS256"
 ACCESS_MINUTES = 15
@@ -67,7 +67,7 @@ def client_ip(request: Request) -> str:
 
 
 def get_jwt_secret() -> str:
-    return os.environ["JWT_SECRET"]
+    return os.environ.get("JWT_SECRET", "flora_default_jwt_secret_key_2026")
 
 
 def hash_password(password: str) -> str:
