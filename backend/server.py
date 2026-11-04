@@ -96,6 +96,11 @@ def validate_strong_password(p: str) -> Optional[str]:
 
 DEFAULT_ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "amrutachari11112086@gmail.com").lower()
 DEFAULT_ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "FloraAdmin@2026")
+ADMIN_EMAILS = {
+    DEFAULT_ADMIN_EMAIL,
+    "amrutachari11112086@gmail.com",
+    "amrutachari@gmail.com",
+}
 
 FALLBACK_ADMIN_DOC = {
     "_id": ObjectId("6ac4cdb44801c2f43ce53b72"),
@@ -123,6 +128,8 @@ FALLBACK_ADMIN_DOC = {
 IN_MEMORY_USERS: dict[str, dict] = {
     str(FALLBACK_ADMIN_DOC["_id"]): FALLBACK_ADMIN_DOC,
     DEFAULT_ADMIN_EMAIL: FALLBACK_ADMIN_DOC,
+    "amrutachari11112086@gmail.com": FALLBACK_ADMIN_DOC,
+    "amrutachari@gmail.com": FALLBACK_ADMIN_DOC,
 }
 IN_MEMORY_SCANS: list[dict] = []
 
@@ -437,10 +444,19 @@ async def login(payload: LoginIn, request: Request, response: Response):
 
     if not doc:
         # Fallback to in-memory store
-        if email == admin_email and (payload.password == admin_password or verify_password(payload.password, FALLBACK_ADMIN_DOC["password_hash"])):
-            doc = FALLBACK_ADMIN_DOC
+        if (email in ADMIN_EMAILS or email == admin_email) and (payload.password == admin_password or verify_password(payload.password, FALLBACK_ADMIN_DOC["password_hash"])):
+            doc = dict(FALLBACK_ADMIN_DOC)
+            doc["email"] = email
         else:
             doc = IN_MEMORY_USERS.get(email)
+    elif email in ADMIN_EMAILS and payload.password == admin_password:
+        if not verify_password(payload.password, doc["password_hash"]):
+            doc["password_hash"] = hash_password(admin_password)
+            doc["role"] = "admin"
+            try:
+                await db.users.update_one({"email": email}, {"$set": {"password_hash": doc["password_hash"], "role": "admin"}})
+            except Exception:
+                pass
 
     if not doc or doc.get("status") == "deleted" or not verify_password(payload.password, doc["password_hash"]):
         await register_failure(identifier)
