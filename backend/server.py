@@ -551,8 +551,12 @@ async def list_spices():
 @api_router.get("/plants")
 async def list_plants():
     """Retrieve full botanical catalog from the database."""
-    plants = await db.plants.find({}, {"_id": 0}).sort("name", 1).to_list(100)
-    if not plants:
+    try:
+        plants = await db.plants.find({}, {"_id": 0}).sort("name", 1).to_list(100)
+        if not plants:
+            plants = EXPANDED_BOTANICAL_KNOWLEDGE
+    except Exception as e:
+        logger.warning(f"Database query failed, using static catalog: {e}")
         plants = EXPANDED_BOTANICAL_KNOWLEDGE
     return {"plants": plants, "count": len(plants)}
 
@@ -561,14 +565,17 @@ async def list_plants():
 async def get_plant(identifier: str):
     """Retrieve single botanical record by stem, name, or alias."""
     target = identifier.lower().strip()
-    plant = await db.plants.find_one({
-        "$or": [
-            {"stem": target},
-            {"name": {"$regex": f"^{target}", "$options": "i"}},
-            {"scientific_name": {"$regex": f"^{target}", "$options": "i"}},
-            {"aliases": target},
-        ]
-    }, {"_id": 0})
+    try:
+        plant = await db.plants.find_one({
+            "$or": [
+                {"stem": target},
+                {"name": {"$regex": f"^{target}", "$options": "i"}},
+                {"scientific_name": {"$regex": f"^{target}", "$options": "i"}},
+                {"aliases": target},
+            ]
+        }, {"_id": 0})
+    except Exception:
+        plant = None
     if not plant:
         # Check in memory fallback
         plant = next((p for p in EXPANDED_BOTANICAL_KNOWLEDGE if p.get("stem") == target or target in p.get("name", "").lower()), None)
@@ -819,22 +826,25 @@ async def seed_plants():
 
 @app.on_event("startup")
 async def on_startup():
-    await db.users.create_index("email", unique=True)
-    await db.sessions.create_index("jti", unique=True)
-    await db.sessions.create_index("user_id")
-    await db.password_reset_tokens.create_index("token", unique=True)
-    await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=86400)
-    await db.email_verification_tokens.create_index("token", unique=True)
-    await db.email_verification_tokens.create_index("expires_at", expireAfterSeconds=172800)
-    await db.login_attempts.create_index("identifier", unique=True)
-    await db.scans.create_index("user_id")
-    await db.scans.create_index("id", unique=True)
-    await db.cron_runs.create_index("at", expireAfterSeconds=604800)
-    await db.plants.create_index("stem", unique=True)
-    await db.plants.create_index("name")
-    await seed_admin()
-    await seed_plants()
-    logger.info("FLORAai backend ready.")
+    try:
+        await db.users.create_index("email", unique=True)
+        await db.sessions.create_index("jti", unique=True)
+        await db.sessions.create_index("user_id")
+        await db.password_reset_tokens.create_index("token", unique=True)
+        await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=86400)
+        await db.email_verification_tokens.create_index("token", unique=True)
+        await db.email_verification_tokens.create_index("expires_at", expireAfterSeconds=172800)
+        await db.login_attempts.create_index("identifier", unique=True)
+        await db.scans.create_index("user_id")
+        await db.scans.create_index("id", unique=True)
+        await db.cron_runs.create_index("at", expireAfterSeconds=604800)
+        await db.plants.create_index("stem", unique=True)
+        await db.plants.create_index("name")
+        await seed_admin()
+        await seed_plants()
+        logger.info("FLORAai backend ready.")
+    except Exception as e:
+        logger.warning(f"Startup database initialization deferred or failed: {e}")
 
 
 @app.on_event("shutdown")
