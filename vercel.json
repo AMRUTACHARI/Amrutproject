@@ -5,17 +5,23 @@
       "root": "frontend/"
     },
     "backend": {
-      "root": "backend/"
+      "root": "backend/",
+      "framework": "fastapi",
+      "entrypoint": "main:app"
     }
   },
   "rewrites": [
     {
-      "source": "/api/:match*",
-      "destination": "backend"
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
     },
     {
-      "source": "/((?!api/).*)",
-      "destination": "frontend"
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
     }
   ]
 }
