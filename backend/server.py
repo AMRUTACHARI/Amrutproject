@@ -20,7 +20,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import FastAPI, APIRouter, Request, Response, Depends, HTTPException, status, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field, field_validator
@@ -945,7 +945,10 @@ if not STATIC_BUILD_DIR.exists():
 async def root():
     index_file = STATIC_BUILD_DIR / "index.html"
     if index_file.exists():
-        return FileResponse(index_file)
+        try:
+            return FileResponse(index_file)
+        except Exception:
+            return HTMLResponse(content=index_file.read_text(encoding="utf-8"))
     return {"message": "FLORAai API", "status": "ok"}
 
 
@@ -1071,8 +1074,14 @@ if STATIC_BUILD_DIR.exists():
     async def serve_spa_frontend(full_path: str):
         target = STATIC_BUILD_DIR / full_path
         if target.exists() and target.is_file():
-            return FileResponse(target)
+            try:
+                return FileResponse(target)
+            except Exception:
+                pass
         index_file = STATIC_BUILD_DIR / "index.html"
         if index_file.exists():
-            return FileResponse(index_file)
+            try:
+                return FileResponse(index_file)
+            except Exception:
+                return HTMLResponse(content=index_file.read_text(encoding="utf-8"))
         return {"message": "FLORAai API", "status": "ok"}
