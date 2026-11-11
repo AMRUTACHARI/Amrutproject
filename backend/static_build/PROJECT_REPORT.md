@@ -1,685 +1,589 @@
-# FLORAai: AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora
-**Major Project Technical Report**  
-*Submitted in partial fulfillment of the requirements for the award of the degree of*  
+# FLORAai 🌿 — AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora
+
+**Major Project Technical Report**
+
+*Submitted in partial fulfillment of the requirements for the award of the degree of*
+
 **BACHELOR OF ENGINEERING IN COMPUTER SCIENCE AND ENGINEERING**
 
+
 **Candidate Name:** AMRUT ACHARI  
+
 **Department:** Department of Computer Science & Engineering  
+
 **Academic Year:** 2025 – 2026  
-**Live Production URL:** [https://amrutproject.vercel.app](https://amrutproject.vercel.app)  
-**GitHub Source Repository:** [https://github.com/AMRUTACHARI/Amrutproject](https://github.com/AMRUTACHARI/Amrutproject)
+
+**Live Deployment:** [https://amrutproject.vercel.app](https://amrutproject.vercel.app)  
+
+**GitHub Repository:** [https://github.com/AMRUTACHARI/Amrutproject](https://github.com/AMRUTACHARI/Amrutproject)
 
 ---
+
+
+### (AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora)
+
+Submitted By: AMRUT ACHARI
+Department of Computer Science and Engineering
+Academic Year 2025 – 2026
+Live Platform: https://amrutproject.vercel.app
+
 
 ## TABLE OF CONTENTS
 
-| Chapter No | Title | Page No |
-| :--- | :--- | :--- |
-| | **ACKNOWLEDGEMENT** | ii |
-| | **DECLARATION** | iii |
-| | **ABSTRACT** | iv |
-| **1** | **INTRODUCTION** | **1** |
-| | 1.1 Problem Statement | 2 |
-| | 1.2 Objectives | 3 |
-| | 1.3 Applications | 4 |
-| **2** | **HARDWARE AND SOFTWARE REQUIREMENTS** | **5** |
-| | 2.1 Hardware Configuration | 5 |
-| | 2.2 Software Specification | 6 |
-| **3** | **DATABASE AND SYSTEM DESIGN** | **7** |
-| | 3.1 Introduction | 7 |
-| | 3.2 Data Flow Diagrams (DFD Level 0, Level 1, Level 2) | 8 |
-| | 3.3 Schema Diagram | 13 |
-| | 3.4 Entity Relationship (ER) Diagram | 15 |
-| **4** | **TESTING AND IMPLEMENTATION** | **17** |
-| | 4.1 White Box Testing | 17 |
-| | 4.2 Black Box Testing | 19 |
-| | 4.3 Unit Testing | 21 |
-| | 4.4 Integration Testing | 23 |
-| | 4.5 System Testing | 25 |
-| | 4.6 Acceptance Testing | 27 |
-| | 4.7 Validation Testing | 29 |
-| **5** | **SYSTEM SCREENSHOTS AND MODULE DESCRIPTIONS** | **31** |
-| | 5.1 Landing Page & Botanical Herbarium Showcase | 31 |
-| | 5.2 User Authentication & JWT Secure Login | 32 |
-| | 5.3 Farmer / Home Gardener Dashboard | 33 |
-| | 5.4 Live AI Leaf Scanner & Media Capture | 34 |
-| | 5.5 AI Diagnostic Pathology Report & Health Score | 35 |
-| | 5.6 Organic Ayurvedic Remedy Prescription Engine | 36 |
-| | 5.7 46-Species Botanical Catalog & Vernacular Search | 37 |
-| | 5.8 Personal Foliar Scan History & Recovery Tracker | 38 |
-| | 5.9 Agricultural Officer / Admin Disease Outbreak Map | 39 |
-| | 5.10 Administrative Analytics & Platform Overview | 40 |
-| | 5.11 Mobile Responsive PWA / Camera View | 40 |
-| | **CONCLUSION AND FUTURE SCOPE** | **41** |
-| | Conclusion | 41 |
-| | Future Scope | 42 |
-| | **REFERENCES** | **43** |
-
----
 
 ## ACKNOWLEDGEMENT
 
-I express my deepest gratitude to all who contributed to the design, research, implementation, and successful cloud deployment of the major engineering project titled **"FLORAai: AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora"**.
+I would like to express my deepest gratitude to all those who contributed to the successful completion and deployment of the project titled "FLORAai: AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora".
 
-First and foremost, I convey my sincere thanks and profound respect to my project guide and esteemed faculty members in the Department of Computer Science and Engineering for their continuous encouragement, technical critique, and guidance throughout the project lifecycle.
+First and foremost, I express my profound respect and sincere thanks to my project guide and faculty mentors in the Department of Computer Science and Engineering for their continuous encouragement, valuable suggestions, insightful critiques, and technical guidance throughout the design, model training, and deployment phases of this application.
 
-I also extend my sincere thanks to the Head of the Department and the college administration for providing high-speed laboratory infrastructure, computing facilities, and an encouraging academic environment essential to undertake this research in computer vision, deep neural networks, and full-stack web engineering.
+I also extend my sincere thanks to the Head of the Department and the institution for providing the high-speed laboratory infrastructure, computing facilities, and academic environment essential to undertake this research in machine learning and full-stack web engineering.
 
-Lastly, I express heartfelt gratitude to my family, peers, and fellow developers whose moral support, constructive feedback, and endurance made this submission possible.
+Lastly, I am grateful to my family, peers, and fellow developers whose moral support, constructive feedback, and endurance made this submission possible.
 
-**AMRUT ACHARI**  
-Department of Computer Science & Engineering  
+AMRUT ACHARI
+Department of Computer Science & Engineering
 
----
 
 ## DECLARATION
 
-I hereby declare that the major project technical report entitled **"FLORAai: AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora"** submitted to the Department of Computer Science and Engineering is a bonafide record of independent engineering work carried out by me under faculty supervision.
+I hereby declare that the project report entitled "FLORAai: AI-Powered Botanical Diagnostics & Crop Health Platform for Indian Flora" submitted to the Department of Computer Science and Engineering is a bonafide record of independent engineering work carried out by me under faculty supervision.
 
 I further declare that this project work, either in part or in full, has not been previously submitted to any other university, institute, or examining body for the award of any degree, diploma, or academic distinction.
 
-The live application is independently engineered and deployed at **https://amrutproject.vercel.app** with complete source versioning maintained at **https://github.com/AMRUTACHARI/Amrutproject**.
+The live application is independently engineered and deployed at https://amrutproject.vercel.app with complete source versioning maintained at https://github.com/AMRUTACHARI/Amrutproject.
 
-**Date:** November 2026  
-**Place:** Karnataka, India  
-**AMRUT ACHARI**
+Date: November 2026
+Place: Karnataka, India
 
----
+AMRUT ACHARI
+
 
 ## ABSTRACT
 
-Agriculture serves as the backbone of the Indian socio-economic structure, employing over 50% of the national workforce while contributing substantially to food security and rural livelihoods. However, crop yield losses attributable to foliar phytopathologies, fungal blights, bacterial wilt, and pest infestations account for an estimated 15% to 25% of agricultural output annually. Traditional diagnostic methodologies in rural India rely either on subjective visual inspection by local farmers or slow laboratory incubation through Krishi Vigyan Kendras (KVK), creating an unacceptable latency of 5 to 14 days during which foliar infections spread uncontrollably across contiguous farm holdings.
+The rapid growth of technology and increasing challenges in sustainable agriculture have created a need for intelligent plant health diagnostic management systems that can efficiently connect farmers, domestic gardeners, and agricultural institutions. Traditional plant pathology processes often involve manual operations, fragmented communication, limited botanical guidance, and time-consuming laboratory diagnostic procedures. To address these challenges, FLORAai is developed as an AI-powered Botanical Diagnostics and Crop Health Platform that provides a centralized and automated environment for managing the complete plant health lifecycle.
 
-Commercial plant health mobile applications exacerbate this crisis due to two severe technical shortcomings: first, **Western taxonomy bias**, where computer vision models are pre-trained predominantly on North American and European flora (such as hydrangeas, oaks, and apples), leading to acute misclassifications when presented with indigenous Indian staples, medicinal herbs, and tropical cash crops such as Coconut, Areca Palm, Betel Leaf (*Paan*), Curry Leaf (*Kadi Patta*), and Turmeric; second, the **Latin pathology jargon barrier**, wherein models output clinical terms like *"foliar chlorosis"* or *"interveinal necrosis"* accompanied by expensive, synthetic, patented chemical fungicides that ruin soil microbiomes and remain unavailable in local village markets.
+FLORAai integrates four major stakeholders—Farmers, Domestic Home Gardeners, Agricultural Extension Officers, and Botanical Researchers—into a single digital ecosystem. The platform enables farmers to capture leaf photographs, receive real-time deep learning health evaluations, access specialized 46-species Indian botanical knowledge, explore trending agricultural crops, and receive 100% accessible organic Ayurvedic remedies. Agricultural officers and institutions can efficiently monitor disease outbreaks, shortlist affected taluks, analyze regional pathogen spreads, conduct visual camera inspections, and manage quarantine workflows through dedicated dashboards.
 
-To overcome these challenges, this project presents **FLORAai**, an intelligent, full-stack botanical diagnostics and foliar disease surveillance platform tailored specifically for Indian subcontinent flora. FLORAai features an authentic 46-species botanical database spanning tropical field crops, spice perennials, medicinal herbs, and regional palms. The system deploys an optimized dual-head deep learning architecture (**FloraDualNet** / MobileNetV3) alongside multimodal Google Gemini Vision integration, capable of executing fine-grained botanical identification and foliar symptom localization within sub-second latencies.
+The system is developed using modern web technologies including React.js, Tailwind CSS, Python, FastAPI, Motor, MongoDB, and JWT Authentication. Advanced features such as MobileNetV3 Dual-Head Vision (FloraDualNet), Google Gemini Multimodal Vision API, Quantitative Vitality Scoring (0 to 100), Real-Time Video Camera Inspection, Analytics Dashboards, and Ayurvedic Remedy Formulation enhance the overall effectiveness of crop disease management. The platform utilizes a centralized database architecture to ensure secure data storage, efficient information management, and reliable access control for authorized users.
 
-FLORAai revolutionizes plant health management by strictly avoiding synthetic toxic chemicals and instead algorithmically generating 100% accessible, organic, and Ayurvedic remedy prescriptions—including cold-pressed neem oil (*Azadirachta indica*), fermented sour buttermilk (*Lactobacillus acidophilus* bio-spray), wood ash dusting, and *Trichoderma viride* biological treatments. The application bridges linguistic barriers by displaying vernacular botanical names across regional languages including Kannada, Tamil, Hindi, and English.
+FLORAai not only simplifies crop health diagnosis but also promotes environmental sustainability by providing farmers with accessible organic treatments that eliminate soil-poisoning synthetic chemicals. The platform improves diagnostic transparency, reduces agricultural yield losses, enhances treatment accessibility, and enables data-driven decision-making for all stakeholders. By combining modern web technologies with artificial intelligence, FLORAai offers a scalable, secure, and intelligent solution for transforming traditional agriculture into a smarter and more sustainable digital ecosystem. Future enhancements may include drone-based aerial NDVI surveys, IoT soil sensor telemetry, offline on-device quantized edge inference, and speech-to-speech vernacular assistance.
 
-Engineered using a modern reactive architecture comprising React 18, Tailwind CSS, FastAPI (Python 3.12), Motor asynchronous MongoDB driver, and PyJWT token security, FLORAai incorporates an in-memory resilient fallback engine ensuring continuous high-availability even during remote database latencies. The platform features dual role-based workflows: an intuitive diagnostic portal with live camera capture for farmers and home gardeners, and a geospatial disease outbreak surveillance intelligence console for Agricultural Officers. The entire platform is deployed live on cloud edge infrastructure at **https://amrutproject.vercel.app**, delivering a reliable, scalable, and sustainable digital ecosystem for agricultural resilience.
 
----
+# CHAPTER 1
 
-# CHAPTER 1: INTRODUCTION
 
-FLORAai is an intelligent botanical diagnostics and crop health intelligence platform designed to bridge the gap between advanced artificial intelligence and practical grassroots agriculture across the Indian subcontinent. India's agricultural ecosystem is characterized by immense biodiversity, encompassing over 45,000 plant species ranging from staple cereal crops and spice plantations to rare medicinal herbs and commercial tropical palms. Despite this abundance, farmers and domestic home gardeners face severe obstacles in maintaining foliar health due to early-stage plant diseases, nutritional chlorosis, and invasive insect pest infestations.
+# INTRODUCTION
 
-Traditional agricultural advisory systems in India require physical visits to regional Krishi Vigyan Kendras (Agricultural Science Centers) or reliance on informal pesticide distributors. This creates severe delay in treatment identification, leading to misdiagnosis, rampant overuse of synthetic neurotoxic chemical sprays, and extensive soil microbiome degradation. FLORAai transforms this diagnostic paradigm by putting an AI-powered "Plant Doctor" directly into the hands of farmers, students, agricultural extension officers, and home gardeners via any modern web-enabled mobile phone or computing device.
+FLORAai is an AI-driven platform designed to revolutionize agricultural plant diagnostics and botanical health management across the Indian subcontinent. It creates a unified digital ecosystem that seamlessly connects farmers, home gardeners, agricultural extension officers, and academic institutions.
 
-By utilizing advanced computer vision models, transfer-learning based foliar pathology classification, and multimodal reasoning engines, FLORAai identifies plant species and foliar health status in real time from a single captured leaf image. Crucially, FLORAai translates clinical diagnostic findings into clear everyday language and prescribes 100% accessible, organic, and Ayurvedic remedies that can be prepared locally using indigenous farm materials such as neem leaves, sour buttermilk, wood ash, and cow urine extracts.
+For farmers and home gardeners, FLORAai offers a comprehensive suite of tools to enhance plant health and crop yield. This includes AI-based foliar assessments, real-time health score calculations, practical camera inspection tools, and in-depth organic treatment formulation. These features are tailored to improve diagnostic speed, eliminate Latin pathological jargon, and guide sustainable Ayurvedic crop care.
 
-### 1.1 Problem Statement
+Agricultural institutions and extension officers benefit from FLORAai by gaining access to real-time spatial surveillance data. The platform streamlines disease tracking, enabling rapid identification of fungal blights, easy coordination of regional advisories, and effective management of all crop protection activities.
 
-The development of FLORAai directly addresses six critical failures and structural bottlenecks in existing agricultural advisory mechanisms and computer vision tools:
+Technologically, FLORAai leverages a modern stack to deliver its smart botanical diagnostic ecosystem. This includes React.js for a dynamic user interface, Tailwind CSS for efficient styling, and a robust backend built with Python and FastAPI, supported by MongoDB for data management. Advanced features include a MobileNetV3 dual-head neural network for foliar classification, Google Gemini Vision for multimodal reasoning, an in-memory resilient fallback store for zero downtime, and interactive geospatial outbreak analytics dashboards.
 
-1. **Geographical Misalignment & Western Taxonomy Bias:** Commercial computer vision applications are pre-trained on temperate flora native to Europe and North America. When deployed in Indian agro-climatic zones, these models fail repeatedly or exhibit erratic classification errors when analyzing indigenous cash crops like Areca Nut, Coconut, Betel Vine, Curry Leaf, Turmeric, and Moringa.
-2. **The "Latin Jargon" Barrier:** Mainstream diagnostic software outputs esoteric academic terminology such as *"cercospora foliar necrosis"*, *"apical meristem blight"*, or *"interveinal chlorosis"*. Rural farmers and domestic plant keepers cannot interpret these clinical statements, leading to frustration and diagnostic abandonment.
-3. **Ecological Toxicity & Chemical Push:** Existing systems routinely prescribe expensive, synthetic, and hazardous chemical fungicides (such as Mancozeb or Chlorpyrifos) that poison groundwater tables, destroy beneficial soil microbes, and leave toxic chemical residues on consumable vegetables and culinary spices.
-4. **Language Exclusion:** Over 85% of Indian farmers communicate primarily in regional languages including Kannada, Tamil, Telugu, and Hindi. English-only botanical apps exclude rural agriculturalists from benefiting from digital advisory systems.
-5. **Fragmented Surveillance & Outbreak Blindness:** Agricultural extension officers lack aggregated, real-time spatial visibility into emerging pest attacks or fungal blights, preventing preemptive quarantine measures before localized outbreaks transform into district-wide crop epidemics.
-6. **Network Vulnerability in Rural Belts:** Remote rural farmlands frequently suffer from intermittent cellular internet connectivity. Conventional cloud-dependent applications fail completely under high-latency or disconnected network states.
+FLORAai is an AI-powered Botanical Diagnostics & Crop Health Platform designed to automate and improve the agricultural disease management process. It connects farmers, domestic growers, agricultural officers, and research institutions through a centralized digital ecosystem. The platform provides features such as live camera leaf capture, chlorosis color mask segmentation, 46-species Indian botanical catalog, vernacular translation, and scan history tracking to enhance agricultural productivity and environmental health.
 
-### 1.2 Objectives
+For extension officers and institutions, FLORAai simplifies crop disease monitoring and quarantine management through automation. Departments can conduct assessments, identify affected areas, and manage field advisories efficiently, while institutions can track botanical trends. The platform integrates tools such as MobileNetV3 DualNet, Google Gemini Vision, Quantitative Vitality Scoring, and Leaflet Geospatial Maps.
 
-The primary goal of FLORAai is to build, validate, and deploy a robust, zero-chemical, intelligent plant pathology platform tailored for Indian flora. The specific technical and botanical objectives are:
 
-- **Objective 1 — Authentic Indian Subcontinent Botanical Herbarium:** Standardize a comprehensive 46-species catalog covering field crops, culinary spices, medicinal herbs, and dedicated palm varieties.
-- **Objective 2 — Dual-Head Deep Learning Vision Model:** Implement `FloraDualNet` utilizing MobileNetV3-Small architecture for joint species identification and foliar symptom classification.
-- **Objective 3 — Instant Edge & Cloud Foliar Diagnostics:** Deliver end-to-end inference latencies under 1.8 seconds from camera capture to full diagnostic breakdown.
-- **Objective 4 — Quantitative Plant Health Scores:** Compute an objective foliar vitality metric from 0 (Severely Compromised) to 100 (Optimal Vitality) based on chlorosis and necrosis area ratios.
-- **Objective 5 — 100% Accessible Organic & Ayurvedic Treatments:** Formulate zero-chemical remedies utilizing neem oil, sour buttermilk sprays, wood ash, and bio-fungicides.
-- **Objective 6 — Multilingual Vernacular Nomenclature:** Display authentic botanical names alongside localized vernacular names in Kannada, Tamil, Hindi, and English.
-- **Objective 7 — Geospatial Disease Outbreak Map:** Provide Agricultural Officers with real-time geographical clustering of reported plant infections for quarantine planning.
-- **Objective 8 — Immutable Foliar Scan Audits:** Allow registered farmers to track historical recovery timelines of infected crops across consecutive seasonal scans.
-- **Objective 9 — Resilient Zero-Downtime Fallback Architecture:** Guarantee uninterruptible service delivery through automated local caching and in-memory catalog recovery.
-- **Objective 10 — Universal Multi-Device Web Application:** Provide responsive, zero-install accessibility across iOS, Android, macOS, Linux, and Windows platforms via Vercel edge infrastructure.
+## PROBLEM STATEMENT
 
-### 1.3 Applications
 
-FLORAai is engineered for practical, real-world deployment across multiple sectors of Indian agriculture, education, and domestic horticulture:
+### Manual Plant Diagnostic Process
 
-1. **Smallholder Farming:** Enables rural smallholders to diagnose crop blights in paddy, wheat, cotton, and sugarcane using basic smartphones without visiting distant urban laboratories.
-2. **Terrace & Urban Gardening:** Assists urban home gardeners in caring for potted culinary spices (curry leaf, coriander, mint) and courtyard flowers (hibiscus, rose, jasmine) using kitchen-based organic ingredients.
-3. **Ayurvedic & Medicinal Farming:** Provides authentication and foliar health monitoring for commercial growers of high-value medicinal flora like Ashwagandha, Tulsi, Aloe Vera, and Amla.
-4. **Agricultural Extension (KVK):** Serves as a digital screening instrument for field agricultural extension workers conducting door-to-door crop health inspections.
-5. **Academic & Botanical Research:** Educates undergraduate botany and agricultural engineering students on foliar pathology, leaf venation patterns, and taxonomy.
-6. **Crop Insurance Damage Verification:** Offers objective, timestamped image records and health scores to verify pest damage for crop insurance claims.
-7. **Commercial Nursery Quarantine:** Helps nursery managers inspect saplings for latent viral leaf curl or fungal mold prior to dispatching commercial shipments.
-8. **Epidemic Surveillance & Outbreak Containment:** Allows State Agricultural Departments to detect early spatial outbreaks of invasive pests via interactive heatmaps.
+Many farmers and gardeners still manage plant diseases manually through trial and error, making the diagnostic process slow and inefficient.
 
----
 
-# CHAPTER 2: HARDWARE AND SOFTWARE REQUIREMENTS
+### Lack of Botanical Skill & Taxonomy Analysis
 
-### 2.1 Hardware Configuration
+Growers often do not know the specific nutritional deficiencies, fungal pathogens, or missing trace minerals affecting their plants.
 
-The hardware infrastructure is segmented into three distinct execution tiers:
 
-#### 1. Development Workstation (Machine Learning & Full-Stack Development)
-- **Processor:** Apple Silicon M-Series (M1/M2/M3) with Unified GPU Architecture or Intel Core i7 / AMD Ryzen 7 (8 Cores, 16 Threads minimum).
-- **RAM:** 16 GB Unified Memory (or DDR4/DDR5 RAM) for concurrent execution of PyTorch GPU pipelines, Docker containers, React build tooling, and FastAPI servers.
-- **Storage:** 512 GB PCIe NVMe Solid State Drive (SSD) providing high I/O throughput (> 3000 MB/s).
-- **Network:** High-speed broadband Wi-Fi connection (100+ Mbps) for synchronization with MongoDB Atlas cloud clusters and remote Git repositories.
+### Esoteric Latin Pathology Jargon
 
-#### 2. Cloud Production Serverless Environment (Vercel Edge & Cloudflare)
-- **Compute Tier:** Scalable Serverless Execution Units with up to 1024 MB RAM allocation per invocation.
-- **CDN Distribution:** Global Anycast Content Delivery Network (CDN) delivering sub-50ms static asset delivery across South Asian nodes (Mumbai, Chennai, Bangalore edge datacenters).
-- **Scalability:** Automatic horizontal autoscaling handling from 1 to 10,000 concurrent diagnostic API requests without manual intervention.
+Diagnostic tools output esoteric academic terminology like 'interveinal chlorosis' or 'cercospora necrosis' without plain-English explanations.
 
-#### 3. Client End-User Devices (Farmers, Students, Agricultural Officers)
-- **Device Compatibility:** Any smartphone running Android 8.0+ or iOS 12.0+, or desktop workstation running modern web browsers.
-- **Device Memory:** 2 GB RAM minimum (4 GB recommended) for smooth canvas camera rendering.
-- **Camera Sensor:** Integrated CMOS camera sensor (5 Megapixels or higher) with auto-focus capability for crisp leaf venation capture.
-- **Network Interface:** Cellular 3G / 4G / 5G or local Wi-Fi connectivity.
 
-### 2.2 Software Specification
+### Toxic Synthetic Chemical Prescriptions
 
-- **Operating System:** macOS Sequoia / Sonoma, Linux Ubuntu 22.04 LTS, or Windows 11 64-bit.
-- **Backend Runtime:** Python 3.12 (64-bit) leveraging modern asyncio concurrency and strict type hinting.
-- **Backend Framework:** FastAPI 0.110+ ASGI web framework with Starlette routing and Pydantic v2 data validation schemas.
-- **ASGI Web Server:** Uvicorn ASGI asynchronous server with multi-worker concurrency support.
-- **Frontend Framework:** React 18.2+ featuring functional components, custom hooks, and concurrent DOM rendering.
-- **Styling Framework:** Tailwind CSS 3.4 with custom botanical design tokens, responsive breakpoints, and glassmorphism styling.
-- **Iconography:** Lucide React vector icon library for intuitive agricultural UI controls.
-- **Database:** MongoDB Atlas 7.0 (NoSQL Document Store) hosted in the AWS Mumbai (ap-south-1) region for low-latency queries.
-- **Database Driver:** Motor 3.3.2 asynchronous Python driver for non-blocking I/O database operations.
-- **Deep Learning Framework:** PyTorch 2.2+ with torchvision and Apple Metal Performance Shaders (MPS) acceleration.
-- **Vision Architecture:** MobileNetV3-Small convolutional neural network architecture with dual classification heads (`FloraDualNet`).
-- **Multimodal Vision AI:** Google Gemini 1.5 Flash Vision Multimodal API for high-level semantic leaf pathology verification.
-- **Image Preprocessing:** Pillow (PIL) 10.2+ and NumPy 1.26+ for real-time tensor normalization and image processing.
-- **Authentication & Security:** PyJWT (JSON Web Tokens) with HS256 cryptographic signatures and Bcrypt salted hashing for secure password protection.
-- **Development IDE:** Visual Studio Code (VS Code) with Python, ESLint, Prettier, and GitLens extensions.
-- **Deployment & Hosting:** Vercel Serverless Edge Platform with automated continuous integration and continuous deployment (CI/CD) pipelines.
-
----
-
-# CHAPTER 3: DATABASE AND SYSTEM DESIGN
-
-### 3.1 Introduction
-
-The database architecture of FLORAai is engineered using MongoDB, an industry-standard, document-oriented NoSQL database system. Plant pathology data is inherently dynamic and heterogeneous: a single leaf diagnostic record encompasses high-resolution image references, localized bounding box coordinates, dual-head classification probabilities, symptom categorizations, multi-step Ayurvedic treatment preparations, and geographic latitude/longitude coordinates. A rigid relational SQL schema would introduce excessive join overhead and schema migration fragility as new botanical species and pathogens are discovered.
-
-MongoDB's BSON document model allows FLORAai to store comprehensive plant diagnostics as rich, self-contained documents. Compound indexing on `user_id`, `timestamp`, and `plant_name` guarantees sub-5ms query response times even as historical scan collections scale into hundreds of thousands of records. Furthermore, FLORAai incorporates an asynchronous Motor driver layer within FastAPI, ensuring that database read and write operations never block the concurrent execution of image inference tasks.
-
-### 3.2 Data Flow Diagrams (DFD)
-
-#### 1. DFD LEVEL 0: System Context Diagram
-
-```mermaid
-flowchart TD
-    Farmer["Farmer / Home User (Mobile/Web)"]
-    Admin["Agricultural Officer (Admin/KVK)"]
-    System(("0.0 FLORAai Core Platform
-(AI Vision + Catalog + Outbreak Tracker)"))
-    DB[("MongoDB Cloud Store
-(Users, Plants, Scans, Outbreaks)")]
-
-    Farmer -->|"1. Leaf Photo & Credentials"| System
-    System -->|"2. Diagnosis & Ayurvedic Remedy"| Farmer
-    Admin -->|"3. Filter Criteria & Outbreak Updates"| System
-    System -->|"4. Outbreak Heatmap & Platform Metrics"| Admin
-    System <-->|"5. Async Read / Write BSON"| DB
-```
-
-*Figure 3.2.1: DFD Level 0 Context Diagram for FLORAai System Platform*
-
-#### 2. DFD LEVEL 1: For Farmer / Home User
+Standard gardening applications routinely prescribe expensive, patented chemical fungicides that harm beneficial soil microbiomes.
 
-```mermaid
-flowchart LR
-    User["Farmer / User"]
-    P1(("1.0 User Auth"))
-    P2(("2.0 Leaf Preprocessing"))
-    P3(("3.0 Dual-Head AI Vision"))
-    P4(("4.0 Scan History"))
-
-    D1[("D1: Users Store")]
-    D2[("D2: Plants Catalog")]
-    D3[("D3: Scans Store")]
-
-    User -->|"Credentials"| P1
-    P1 <-->|"Verify User"| D1
-    P1 -->|"JWT Token"| User
-
-    User -->|"Leaf Image"| P2
-    P2 -->|"Normalized Tensor [224x224]"| P3
-    D2 -->|"Species Metadata"| P3
-    P3 -->|"Save Scan"| D3
-    P3 -->|"Health Score & Remedy"| User
-
-    User -->|"Query Past Scans"| P4
-    P4 <-->|"Retrieve Records"| D3
-    P4 -->|"Chronological Timeline"| User
-```
-
-*Figure 3.2.2: DFD Level 1 for Farmer / Home User Operations*
-
-#### 3. DFD LEVEL 2: For Farmer / Home User (Foliar Diagnostic Subsystem)
-
-```mermaid
-flowchart TD
-    In["Normalized Leaf Tensor [1, 3, 224, 224]"]
-    B31["3.1 MobileNetV3 Backbone (Inverted Residuals)"]
-    B32["3.2 Species Head (Softmax over 46 Classes)"]
-    B33["3.3 Pathology Head (Blight/Rust/Chlorosis)"]
-    B34["3.4 Vitality & Health Score Synthesizer (0 - 100)"]
-    B35["3.5 Ayurvedic & Organic Remedy Matcher"]
-    Out["Complete Diagnostic Report (To User & Scans DB)"]
-
-    In --> B31
-    B31 -->|"Feature Map"| B32
-    B31 -->|"Feature Map"| B33
-    B32 -->|"Species ID & Name"| B34
-    B33 -->|"Pathology Logits"| B34
-    B34 -->|"Quantitative Health Index"| B35
-    B35 --> Out
-```
-
-*Figure 3.2.3: DFD Level 2 for AI Foliar Diagnostics Subsystem*
-
-#### 4. DFD LEVEL 1: For Agricultural Officer / Administrator
-
-```mermaid
-flowchart LR
-    Officer["Agricultural Officer"]
-    P5(("5.0 RBAC Auth"))
-    P6(("6.0 Spatial Outbreak Aggregator"))
-    P7(("7.0 Herbarium Catalog Curator"))
-
-    D1[("D1: Users Store")]
-    D3[("D3: Scans Store")]
-    D4[("D4: Outbreaks Store")]
-    D2[("D2: Plants Catalog")]
-
-    Officer -->|"Admin Sign In"| P5
-    P5 <-->|"Verify Role='admin'"| D1
-
-    Officer -->|"Filter Taluk / District"| P6
-    P6 <-->|"Aggregate Blights"| D3
-    P6 <-->|"Outbreak Events"| D4
-    P6 -->|"Geospatial Heatmap"| Officer
-
-    Officer -->|"Update Species Record"| P7
-    P7 <-->|"Sync Catalog"| D2
-```
-
-*Figure 3.2.4: DFD Level 1 for Agricultural Officer & Admin Operations*
-
-#### 5. DFD LEVEL 2: For Agricultural Officer (Outbreak Analytics Pipeline)
-
-```mermaid
-flowchart TD
-    P61["6.1 Spatial Bounding Box Filter (MongoDB $geoNear)"]
-    P62["6.2 Pathogen Frequency & Density Clustering (DBSCAN)"]
-    P63["6.3 Severity Index & Epidemic Threshold Evaluator"]
-    P64["6.4 Vector Map UI & Quarantine Warning Generator"]
-
-    P61 -->|"Filtered Scan Coordinates"| P62
-    P62 -->|"Spatial Clusters"| P63
-    P63 -->|"Classified Outbreak Alert"| P64
-```
-
-*Figure 3.2.5: DFD Level 2 for Geospatial Outbreak Surveillance*
-
-### 3.3 Schema Diagram
-
-#### Collection 1: `users`
-| Field Name | BSON Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `_id` | ObjectId | Primary Key, Auto-gen | Unique internal user identifier |
-| `email` | String | Unique, Indexed, Required | User email address for login |
-| `hashed_password` | String | Required | Bcrypt salted hash string (60 chars) |
-| `name` | String | Required | Full name of user or officer |
-| `role` | String | Default: `'user'` | Role: `'user'` or `'admin'` |
-| `region` | String | Optional | Agricultural zone (e.g., `'South India'`) |
-| `created_at` | Date | Default: `utcnow()` | Account registration timestamp |
-| `last_login` | Date | Optional | Timestamp of most recent authentication |
-
-#### Collection 2: `plants`
-| Field Name | BSON Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `_id` | ObjectId | Primary Key, Auto-gen | Unique plant document identifier |
-| `id` | String | Unique, Indexed, Required | Canonical slug (e.g., `'tulsi'`, `'coconut'`) |
-| `name` | String | Required | Common English name |
-| `scientific_name` | String | Required | Binomial Latin nomenclature |
-| `kannada_name` | String | Required | Vernacular name in Kannada script |
-| `tamil_name` | String | Required | Vernacular name in Tamil script |
-| `hindi_name` | String | Required | Vernacular name in Devanagari script |
-| `category` | String | Indexed, Required | `'medicinal'`, `'crops'`, `'spices'`, `'palms'` |
-| `description` | String | Required | Botanical & morphological overview |
-| `remedy_default` | String | Required | Standard preventative Ayurvedic care |
-| `image_url` | String | Required | Asset path to high-res specimen photograph |
-
-#### Collection 3: `scans`
-| Field Name | BSON Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `_id` | ObjectId | Primary Key, Auto-gen | Unique foliar scan identifier |
-| `user_id` | String | Indexed, Required | Foreign reference to user email or ID |
-| `plant_id` | String | Indexed, Required | Identified plant slug reference |
-| `plant_name` | String | Required | Human-readable species name |
-| `health_score` | Integer | Range: 0 to 100 | Computed vitality percentage |
-| `status` | String | Required | `'Healthy'`, `'Early Stress'`, `'Critical Blight'` |
-| `diagnosis` | String | Required | Plain-English pathological diagnosis |
-| `symptoms` | Array\<String\> | Required | List of identified visual foliar symptoms |
-| `remedy` | String | Required | Prescribed Ayurvedic / Organic preparation |
-| `image_data` | String | Optional Base64 | Encoded preview thumbnail of scanned leaf |
-| `coordinates` | Object | Optional | GeoJSON point `{lat: Float, lng: Float}` |
-| `created_at` | Date | Default: `utcnow()` | Exact scan capture timestamp |
-
-#### Collection 4: `outbreaks`
-| Field Name | BSON Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `_id` | ObjectId | Primary Key, Auto-gen | Unique outbreak incident identifier |
-| `disease_name` | String | Indexed, Required | Pathology name (e.g., `'Bud Rot'`, `'Blast'`) |
-| `crop_affected` | String | Indexed, Required | Host plant (e.g., `'Coconut'`, `'Paddy'`) |
-| `severity` | String | Enum: Low/Med/High | Epidemic severity classification |
-| `latitude` | Double | Required | Geographic latitude coordinate |
-| `longitude` | Double | Required | Geographic longitude coordinate |
-| `affected_acres` | Double | Optional | Estimated agrarian land under blight |
-| `quarantine_status` | String | Default: `'Active'` | `'Active'`, `'Contained'`, `'Resolved'` |
-| `reported_date` | Date | Default: `utcnow()` | Timestamp of outbreak confirmation |
-
-*Figure 3.3.1: Complete MongoDB Collections & Field Schema Architecture*
-
-### 3.4 Entity Relationship (ER) Diagram
-
-```mermaid
-erDiagram
-    USERS ||--o{ SCANS : "submits (1:N)"
-    USERS ||--o{ AUDIT_LOGS : "triggers (1:N)"
-    PLANTS ||--o{ SCANS : "identified_in (1:N)"
-    PLANTS ||--o{ OUTBREAKS : "suffers_from (1:N)"
-
-    USERS {
-        ObjectId _id PK
-        string email UK
-        string hashed_password
-        string name
-        string role
-        date created_at
-    }
-
-    SCANS {
-        ObjectId _id PK
-        string user_id FK
-        string plant_id FK
-        string plant_name
-        int health_score
-        string status
-        string remedy
-        date created_at
-    }
-
-    PLANTS {
-        ObjectId _id PK
-        string id UK
-        string name
-        string scientific_name
-        string kannada_name
-        string tamil_name
-        string category
-    }
-
-    OUTBREAKS {
-        ObjectId _id PK
-        string crop_affected FK
-        string disease_name
-        string severity
-        double latitude
-        double longitude
-        date reported_date
-    }
-
-    AUDIT_LOGS {
-        ObjectId _id PK
-        string user_id FK
-        string action
-        date timestamp
-    }
-```
-
-*Figure 3.4.1: Entity Relationship (ER) Diagram with Cardinalities and Primary/Foreign Keys*
-
----
-
-# CHAPTER 4: TESTING AND IMPLEMENTATION
-
-### 4.1 White Box Testing
-
-White box testing evaluates internal program logic, execution branches, exception handlers, and cryptographic routines:
-
-| Test ID | Component / Function | Test Scenario / Code Path | Expected Algorithmic Behavior | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **WB-01** | `auth.py :: verify_password()` | Bcrypt hash validation with timing attack resistance | Returns True on correct password; constant-time exit on failure | **PASS** |
-| **WB-02** | `auth.py :: create_access_token()` | JWT token generation with HS256 secret and expiry | Generates compliant 3-part base64 token with 7-day expiration | **PASS** |
-| **WB-03** | `plant_ai.py :: FloraDualNet.forward()` | Execute forward pass with 4D tensor `[1, 3, 224, 224]` | Simultaneously outputs species logits (46) and pathology logits (10) | **PASS** |
-| **WB-04** | `plant_ai.py :: preprocess_image()` | Input arbitrary sized image (e.g. 4032x3024 JPEG) | Resizes to 224x224, normalizes with ImageNet mean/std tensors | **PASS** |
-| **WB-05** | `plant_ai.py :: heuristic_chlorosis()` | Evaluate HSV color space mask for chlorosis / necrosis | Segments yellow/brown pixels and computes accurate percentage | **PASS** |
-| **WB-06** | `plant_ai.py :: fallback_classifier()` | Simulate cloud environment without torch / CUDA runtime | Safely routes to cellular color segmentation without crash | **PASS** |
-| **WB-07** | `server.py :: resolve_api_base_url()` | Evaluate environment when running on Vercel production domain | Dynamically resolves to relative `'/api'` preventing mixed-content | **PASS** |
-| **WB-08** | `server.py :: database_resilience()` | Simulate MongoDB Atlas DNS timeout on serverless cold boot | Seamlessly switches to in-memory state store with zero error | **PASS** |
-| **WB-09** | `server.py :: cors_middleware()` | Dispatch HTTP OPTIONS preflight request from external origin | Appends Access-Control-Allow-Origin, Headers, and Credentials | **PASS** |
-| **WB-10** | `server.py :: get_plant_catalog()` | Invoke catalog endpoint with category filter (`'medicinal'`) | Filters internal 46-species dictionary and returns JSON list | **PASS** |
-| **WB-11** | `server.py :: log_scan_audit()` | Asynchronous insertion of diagnostic payload into collection | Executes non-blocking write via Motor driver; returns ObjectId | **PASS** |
-| **WB-12** | `server.py :: admin_role_guard()` | Unauthenticated request to `/api/admin/outbreaks` | Raises HTTPException(403 Forbidden); halts unauthorized branch | **PASS** |
-
-*Table 4.1.1: White Box Testing Matrix*
-
-### 4.2 Black Box Testing
-
-Black box testing evaluates the functional behavior, input validation, and user interface responses:
-
-| Test ID | Module / Interface | Input Scenario | Expected System Output | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **BB-01** | User Registration Form | Valid name, valid email, strong password (8+ chars) | Account created; user redirected to login with green toast alert | **PASS** |
-| **BB-02** | User Registration Form | Registration attempt with improperly formatted email | Form halts submission; displays 'Please enter a valid email address' | **PASS** |
-| **BB-03** | User Login Interface | Valid registered email and correct password | Authentication succeeds; JWT token issued; redirects to Dashboard | **PASS** |
-| **BB-04** | User Login Interface | Valid email with wrong password | Displays 'Invalid credentials'; password field cleared; no token set | **PASS** |
-| **BB-05** | Camera Shutter Control | User clicks 'Capture Photo' button in Scanner view | Freezes live video stream, renders high-res snapshot on HTML5 canvas | **PASS** |
-| **BB-06** | File Upload Input | Drag-and-drop 8MB leaf photo in PNG/JPEG format | Upload succeeds; preview displayed; 'Analyze Plant' button enabled | **PASS** |
-| **BB-07** | File Upload Input | Attempt to upload unsupported file format (e.g., .PDF, .TXT) | System rejects file with warning: 'Only image files are supported' | **PASS** |
-| **BB-08** | Diagnostic Result Card | Completion of leaf analysis | Displays Identified Species, Health Score, Symptoms, and Remedy | **PASS** |
-| **BB-09** | Herbarium Search Input | Search query: 'Tulsi' or Kannada query: 'ತುಳಸಿ' | Filters 46 species catalog instantly to display Ocimum tenuiflorum | **PASS** |
-| **BB-10** | Admin Intelligence View | Non-admin user attempts direct URL navigation to `/admin` | Access denied; user redirected to standard home dashboard | **PASS** |
-
-*Table 4.2.1: Black Box Testing Matrix*
-
-### 4.3 Unit Testing
-
-Unit testing verifies individual mathematical functions, scoring routines, and helper utilities:
-
-| Test ID | Unit Module | Test Input / Parameters | Expected Return Value / Invariant | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **UT-01** | Token Generator | Payload: `{sub: 'user@test.com', role: 'user'}` | Valid base64 encoded JWT string with correct cryptographic signature | **PASS** |
-| **UT-02** | Password Hasher | Plaintext: `'FloraSecret2026!'` | Bcrypt hash string starting with `'$2b$12$'` of length 60 | **PASS** |
-| **UT-03** | Health Score Function | Necrosis Ratio: 0.15, Chlorosis Ratio: 0.20 | Health Score returns 65 (100 - (15 + 20)); Vitality status: 'Fair' | **PASS** |
-| **UT-04** | Health Score Function | Necrosis Ratio: 0.00, Chlorosis Ratio: 0.02 | Health Score returns 98; Vitality status: 'Flourishing' | **PASS** |
-| **UT-05** | Vernacular Mapper | Species: `'coconut'` | Returns Kannada: 'ತೆಂಗಿನ ಮರ', Tamil: 'தென்னை மரம்', Hindi: 'नारियल' | **PASS** |
-| **UT-06** | Base64 Image Decoder | Base64 data URI string with PNG header | Successfully extracts raw bytes and validates magic header `[0x89, 'P', 'N', 'G']` | **PASS** |
-| **UT-07** | Geo-Coordinate Validator | Latitude: 12.9716, Longitude: 77.5946 | Returns True; coordinate confirmed within Indian subcontinent boundary | **PASS** |
-| **UT-08** | Outbreak Aggregator | List of 15 scans from Bangalore region | Returns single clustered outbreak marker with severity 'Medium' | **PASS** |
-| **UT-09** | Remedy Formatter | Pathology: `'powdery_mildew'` | Returns exact Ayurvedic recipe: Sour buttermilk spray (1:10 dilution) | **PASS** |
-| **UT-10** | Catalog Serializer | Internal catalog dictionary | Outputs 46 distinct items, each possessing required 11 metadata fields | **PASS** |
-
-*Table 4.3.1: Unit Testing Matrix*
-
-### 4.4 Integration Testing
-
-Integration testing verifies communication and data fidelity across frontend and backend boundaries:
-
-| Test ID | Interface Boundary | Integration Workflow | Expected Combined Behavior | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **IT-01** | React Auth -> FastAPI Auth | POST `/api/auth/login` with valid form data | FastAPI returns 200 OK + JWT; React sets state and localStorage token | **PASS** |
-| **IT-02** | React Scanner -> FastAPI Vision | POST `/api/plants/diagnose` with leaf image | Vision engine computes diagnosis; React receives payload and mounts card | **PASS** |
-| **IT-03** | FastAPI Vision -> MongoDB Scans | Diagnostic computation finishes | Scan payload asynchronously committed to MongoDB; returns generated `_id` | **PASS** |
-| **IT-04** | React History -> FastAPI Scans | GET `/api/scans` with user JWT header | FastAPI queries MongoDB collection; React renders chronological cards | **PASS** |
-| **IT-05** | FastAPI Backend -> MongoDB Atlas | MongoDB connection lost during execution | Resilient engine falls back to local in-memory store without breaking APIs | **PASS** |
-| **IT-06** | React Catalog -> FastAPI Catalog | GET `/api/plants/catalog` on page load | Returns full 46-species catalog array; React renders responsive cards | **PASS** |
-| **IT-07** | Admin Map -> FastAPI Outbreaks | GET `/api/admin/outbreaks` | Aggregates active outbreak markers; Leaflet/Map vector pins render | **PASS** |
-| **IT-08** | Vercel Edge -> FastAPI Static Build | User requests root URL (`'/'`) or client route | FastAPI Starlette mounts serve bundled `index.html` and JS assets flawlessly | **PASS** |
-
-*Table 4.4.1: Integration Testing Matrix*
-
-### 4.5 System Testing
-
-System testing evaluates overall application performance, concurrency, and cross-browser reliability:
-
-| Test ID | Testing Category | Test Execution Parameters | Observed System Behavior | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **ST-01** | End-to-End User Flow | Register -> Login -> Scan Leaf -> View Remedy -> View History -> Logout | Entire multi-stage workflow completes seamlessly without errors | **PASS** |
-| **ST-02** | High-Resolution Stress | Upload 18 MB raw 4K smartphone photograph | Pillow scales frame to 224x224; memory usage remains bounded < 85MB | **PASS** |
-| **ST-03** | Network Throttling | Throttle client network to 3G speeds (750 kbps) | UI displays botanical loading skeleton; diagnosis completes in 2.8s | **PASS** |
-| **ST-04** | Cross-Browser Testing | Tested on Chrome 122, Safari 17.3, Firefox 123, Edge 122 | Identical typography, layout geometry, camera capture, and animations | **PASS** |
-| **ST-05** | Mobile Viewport Test | Tested on iPhone 14 (390px), Galaxy S22 (360px), iPad (810px) | Adaptive Tailwind grid converts to single column; zero horizontal overflow | **PASS** |
-| **ST-06** | Serverless Cold Boot | Invoke API endpoint after 15 minutes of inactivity | FastAPI cold boot executes in 1.1s on Vercel Edge; sub-200ms thereafter | **PASS** |
-| **ST-07** | Concurrent Load Test | 50 simultaneous diagnostic POST requests dispatched | All 50 requests successfully returned 200 OK within 2.4s aggregate time | **PASS** |
-| **ST-08** | Security Injection Test | Submit SQL/NoSQL injection payloads in email and scan inputs | Pydantic validator strictly rejects malformed types; no injection leak | **PASS** |
-| **ST-09** | Data Isolation Test | User A queries history endpoint while User B is logged in | User A only receives their own scans; strict `user_id` segregation confirmed | **PASS** |
-| **ST-10** | Edge CDN Reliability | Test site reachability from US, Europe, and Asia locations | Global CDN routes traffic through nearest edge; 100% uptime confirmed | **PASS** |
-
-*Table 4.5.1: System Testing Matrix*
-
-### 4.6 Acceptance Testing
-
-Acceptance testing verifies operational satisfaction across key user personas:
-
-| Test ID | User Persona | Acceptance Evaluation Criterion | Validation Outcome | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **AT-01** | Smallholder Farmer | Can diagnose crop health without technical machine learning knowledge | Farmer captures leaf with one click; receives clear green/yellow badge | **PASS** |
-| **AT-02** | Smallholder Farmer | Remedy instructions use accessible kitchen and farm ingredients | Prescribes buttermilk, neem spray, and wood ash rather than chemicals | **PASS** |
-| **AT-03** | Regional Agriculturist | Can read botanical names in native mother tongue | Species cards clearly display Kannada, Tamil, and Hindi translations | **PASS** |
-| **AT-04** | Home Gardener | Can identify indoor and balcony potted plants and common pests | Accurately diagnoses Money Plant, Aloe Vera, and Rose aphid blights | **PASS** |
-| **AT-05** | Agricultural Officer | Can monitor disease outbreaks across taluks and districts | Outbreak map provides interactive geographic clusters and severity filters | **PASS** |
-| **AT-06** | College Student / Scholar | Can utilize botanical catalog for academic taxonomic study | Herbarium provides botanical families, binomial Latin, and medicinal uses | **PASS** |
-| **AT-07** | Mobile Device User | Universal accessibility on mobile without installing native APK | Universal HTTPS URL loads instantly in Chrome and Safari mobile browsers | **PASS** |
-| **AT-08** | Security Auditor | Personal data and scan records are protected against tampering | JWT cookies with HTTP-only flags and Bcrypt salted passwords validated | **PASS** |
-
-*Table 4.6.1: User Acceptance Testing Matrix*
-
-### 4.7 Validation Testing
-
-Validation testing confirms scientific validity, machine learning benchmarks, and bio-safety standards:
-
-| Test ID | Scientific Validation Goal | Benchmark & Experimental Setup | Empirical Result | Status |
-| :--- | :--- | :--- | :--- | :---: |
-| **VT-01** | Botanical Species Accuracy | Test set of 46 distinct Indian subcontinent plant species | 100% top-1 accuracy in identifying canonical botanical species | **PASS** |
-| **VT-02** | Foliar Pathology Recall | Dataset of 120 foliar blight, rust, and chlorosis images | 90.4% sensitivity in correctly classifying fungal & bacterial blights | **PASS** |
-| **VT-03** | Non-Plant Rejection | Input images of human faces, furniture, automobiles, text | Heuristic filter correctly identifies non-foliar image; prompts rescan | **PASS** |
-| **VT-04** | Ayurvedic Remedy Safety | Review prescriptions against ICAR bio-pesticide guidelines | 100% adherence to organic bio-safety; zero harmful synthetic compounds | **PASS** |
-| **VT-05** | Health Score Linearity | Validate score against quantified necrosis pixel areas | High Pearson correlation coefficient (r = 0.94) with manual pixel audits | **PASS** |
-| **VT-06** | Session Integrity | Test token replay and forged cryptographic signature | Tampered JWT tokens instantly rejected with 401 Unauthorized | **PASS** |
-| **VT-07** | Geographic Validity | Verify latitude/longitude bounds of outbreak points | All generated outbreak clusters reside strictly within Indian coordinates | **PASS** |
-| **VT-08** | Production Deployment | Verify live cloud deployment at https://amrutproject.vercel.app | HTTP 200 OK returned on all frontend routes and backend REST endpoints | **PASS** |
-
-*Table 4.7.1: Validation Testing Matrix*
-
----
-
-# CHAPTER 5: SYSTEM SCREENSHOTS AND MODULE DESCRIPTIONS
-
-### 5.1 Landing Page & Botanical Herbarium Showcase
-The landing page serves as the entry portal for visitors, featuring a hero section with natural imagery, a value proposition summary, and a live preview of the 46 Indian botanical specimens. Users can immediately explore plant varieties before creating an account.
-
-*Figure 5.1.1: FLORAai Botanical Herbarium Showcase Specimen (Holy Basil / Tulsi)*
-
-### 5.2 User Authentication & JWT Secure Login
-The authentication module provides secure, tab-switched forms for User Login and User Registration. The interface features real-time validation, responsive password visibility toggles, and instant error handling. Upon verification, the user receives an authenticated JWT cookie.
-
-*Figure 5.1.2: FLORAai User Authentication & Secure Sign In Interface*
-
-### 5.3 Farmer / Home Gardener Dashboard
-The personalized dashboard provides an immediate overview of the user's agricultural activity, displaying total plants scanned, overall garden health index, recent foliar diagnostics, and quick-action buttons to launch the camera scanner or explore the botanical catalog.
-
-*Figure 5.1.3: Farmer Dashboard Botanical Knowledge Card (Neem Tree / Azadirachta indica)*
-
-### 5.4 Live AI Leaf Scanner & Media Capture
-The scanner interface leverages the browser's HTML5 MediaDevices API to stream high-definition video directly from the user's smartphone or webcam. It features a targeting reticle for optimal leaf alignment, shutter controls, and instant file upload capabilities for pre-captured photos.
-
-*Figure 5.1.4: Real-Time Mobile Leaf Scanner & Camera Diagnostics View*
-
-### 5.5 AI Diagnostic Pathology Report & Health Score (0 - 100)
-Upon image submission, the AI diagnostic engine generates an interactive health breakdown card. The card displays the identified species with binomial Latin nomenclature, a color-coded Vitality Gauge (0 to 100), severity badges (Healthy, Early Stress, Critical), and bulleted diagnostic observations.
-
-*Figure 5.1.5: High-Resolution Foliar Image Analysis for Venation and Fungal Blight*
-
-### 5.6 Organic Ayurvedic Remedy Prescription Engine
-Accompanying the diagnosis is a dedicated Organic Treatment card. Unlike Western tools that prescribe synthetic chemicals, FLORAai details specific natural preparations—such as neem seed kernel extract (NSKE), sour buttermilk spray, wood ash, and cow urine decoctions—complete with dosage and application intervals.
-
-*Figure 5.1.6: Kitchen Spice Organic Care Specimen (Curry Leaf / Murraya koenigii)*
-
-### 5.7 46-Species Botanical Catalog & Vernacular Search
-The herbarium catalog displays high-resolution cards for all 46 native Indian species. Users can filter by category (Medicinal, Crops, Spices, Palms) or search in vernacular scripts (Kannada, Tamil, Hindi, English). Each card provides botanical family details, traditional medicinal properties, and preventative care instructions.
-
-*Figure 5.1.7: Tropical Cash Crop Catalog Entry (Coconut Palm / Cocos nucifera)*
-
-### 5.8 Personal Foliar Scan History & Recovery Tracker
-The scan history interface maintains a persistent chronological record of all past leaf inspections. Farmers can track the progressive recovery of infected crops over consecutive weeks, observing whether health scores improve following organic remedy application.
-
-*Figure 5.1.8: Monitored Plantation Crop (Areca Palm / Areca catechu)*
-
-### 5.9 Agricultural Officer / Admin Disease Outbreak Map
-The outbreak surveillance console provides agricultural extension officers with a real-time geospatial map plotting reported crop infections. Pin colors reflect disease severity (Low, Medium, High Blight), enabling rapid administrative intervention and localized crop quarantine alerts.
-
-*Figure 5.1.9: Cloud Database Architecture Supporting Geospatial Outbreak Collections*
-
-### 5.10 Administrative Analytics & Cloud Deployment Console
-The administrative intelligence console aggregates platform-wide metrics: total user registrations, diagnostic volume by state, disease distribution charts, active sessions, and database health metrics, empowering decision-makers with data-driven agricultural insights.
-
-*Figure 5.1.10: Production Cloud Deployment Infrastructure & Environmental Variables*
-
-### 5.11 Mobile Responsive PWA / Camera View
-The user interface is engineered with a mobile-first responsive architecture. On mobile screens (360px to 420px), navigation collapses into an ergonomic bottom tab bar, and camera capture controls automatically bind to the device's rear ultra-wide or macro camera sensor.
-
-*Figure 5.1.11: Mobile Responsive PWA Interface on Handheld Smartphone Viewport*
-
----
-
-# CONCLUSION AND FUTURE SCOPE
-
-### Conclusion
-
-The successful engineering, validation, and cloud deployment of FLORAai demonstrates how modern computer vision, full-stack web architectures, and sustainable agricultural science can converge to solve critical grassroots challenges across the Indian subcontinent. Traditional plant health diagnostics in rural India have long been hindered by geographical isolation, clinical Latin language barriers, slow laboratory incubation, and an over-reliance on toxic synthetic agro-chemicals that compromise human health and soil vitality.
-
-FLORAai effectively addresses each of these historical shortcomings. By establishing an authentic 46-species Indian botanical catalog, the platform eliminates Western geographical bias and accurately recognizes vital tropical staples, spices, medicinal plants, and commercial palms. Through the integration of dual-head neural networks (`FloraDualNet` / MobileNetV3) and multimodal AI reasoning, the platform delivers instantaneous, sub-second foliar health scores directly to mobile browsers.
-
-Crucially, FLORAai stands apart by prioritizing 100% accessible, organic, and Ayurvedic remedy prescriptions—restoring ecological balance through natural ingredients like neem oil, sour buttermilk bio-sprays, and wood ash dusting. With native vernacular nomenclature in Kannada, Tamil, Hindi, and English, paired with administrative geospatial outbreak surveillance, FLORAai provides a comprehensive, scalable, and environmentally sustainable digital health ecosystem for Indian agriculture.
-
-### Future Scope
-
-While FLORAai fulfills all foundational objectives of intelligent botanical diagnostics, several advanced engineering expansions are planned to further amplify its agricultural impact:
-
-1. **Autonomous Drone Multispectral Aerial Surveillance:** Integration with low-cost agricultural drones equipped with multispectral cameras to conduct automated aerial NDVI (Normalized Difference Vegetation Index) surveys across expansive agricultural estates.
-2. **IoT Soil Sensor Telemetry Integration:** Connecting real-time hardware telemetry from soil moisture, electrical conductivity, and NPK (Nitrogen, Phosphorus, Potassium) sensors to correlate foliar chlorosis with root-zone nutrient deficiencies.
-3. **Vernacular Speech-to-Speech Voice Assistant:** Embedding real-time speech recognition and synthesis in regional dialects (Kannada, Tamil, Telugu, Marathi, Hindi) allowing illiterate rural farmers to query diagnostic advice verbally.
-4. **Offline Quantized Edge Inference (TFLite / ONNX):** Deploying int8-quantized MobileNet neural models directly inside the browser using WebAssembly and ONNX Runtime, enabling instant diagnostics with zero internet connectivity.
-5. **Satellite Remote Sensing & Weather Correlation:** Correlating localized foliar blights with real-time ISRO/Bhuvan satellite meteorological data, relative humidity, and rainfall patterns to generate predictive 7-day disease forecast alerts.
-6. **Decentralized Herbal Provenance Ledger (Blockchain):** Utilizing lightweight blockchain ledgers to certify organic Ayurvedic herbs from seed to harvest, providing transparent purity certificates for commercial Ayurvedic medicine manufacturers.
-7. **Community Farmer Krishi Forum:** Building a peer-to-peer community forum where farmers can share indigenous organic formulations, trade heirloom seeds, and discuss regional pest management techniques.
-8. **Microscopic Spore Identification:** Extending vision models to analyze optical microscopic camera attachments for cellular spore identification of powdery mildew and rust pathogens at the fungal spore germination phase.
-9. **Automated SMS & WhatsApp Emergency Broadcasts:** Integrating Twilio and WhatsApp Business APIs to dispatch immediate geo-targeted disease quarantine alerts to registered farmers when an outbreak is detected in their taluk.
-10. **Pest Trap Automated Counting:** Training object detection models (YOLOv9) to automatically count and classify insect pests caught in yellow sticky traps and pheromone traps across orchards.
-11. **Nutritional Deficiency Foliar Heatmaps:** Generating leaf-level segmentation heatmaps that highlight precise interveinal chlorosis patterns distinguishing magnesium, iron, and zinc deficiencies.
-12. **Government Subsidy & Organic Certification Pipeline:** Connecting the platform with the Ministry of Agriculture's Paramparagat Krishi Vikas Yojana (PKVY) to streamline official organic farm certification.
-
----
-
-# REFERENCES
-
-1. Howard, A., Sandler, M., Chu, G., Chen, L. C., Chen, B., Tan, M., Wang, W., Zhu, Y., Pang, R., Vasudevan, V., Le, Q. V., & Adam, H. (2019). Searching for MobileNetV3. *Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)*, 1314-1324.
-2. Mohanty, S. P., Hughes, D. P., & Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. *Frontiers in Plant Science*, 7, 1419. https://doi.org/10.3389/fpls.2016.01419
-3. Indian Council of Agricultural Research (ICAR). (2023). *Handbook of Agriculture: Facts and Figures for Farmers, Students, and All Interested in Farming* (7th ed.). Directorate of Knowledge Management in Agriculture, New Delhi, India.
-4. FastAPI Documentation. (2024). *Modern, Fast (High-Performance), Web Framework for Building APIs with Python 3.8+ Based on Standard Python Type Hints*. Retrieved from https://fastapi.tiangolo.com/
-5. React Official Documentation. (2024). *The Library for Web and Native User Interfaces*. Meta Open Source. Retrieved from https://react.dev/
-6. MongoDB Documentation. (2024). *The Developer Data Platform: Scalable Document Database Manual*. Retrieved from https://www.mongodb.com/docs/
-7. PyTorch Documentation. (2024). *Tensors and Dynamic Neural Networks in Python with Strong GPU Acceleration*. Linux Foundation. Retrieved from https://pytorch.org/docs/
-8. Tailwind CSS Documentation. (2024). *A Utility-First CSS Framework for Rapid UI Development*. Tailwind Labs. Retrieved from https://tailwindcss.com/docs
-9. Google Cloud AI. (2024). *Gemini Multimodal Models Documentation: Capabilities, Prompt Engineering, and Vision Analysis*. Retrieved from https://ai.google.dev/docs
-10. Motor: Asynchronous Python Driver for MongoDB. (2024). *Official Documentation and API Reference*. Retrieved from https://motor.readthedocs.io/
-11. Sharma, R. K., & Chundawat, B. S. (2022). Organic Management of Foliar Diseases in Tropical Cash Crops Using Indigenous Microorganisms and Botanicals. *Indian Journal of Agricultural Sciences*, 92(4), 452-458.
-12. National Medicinal Plants Board (NMPB). (2023). *Agro-Techniques of Selected Medicinal Plants* (Vols. 1–4). Ministry of AYUSH, Government of India, New Delhi.
-13. Perez, L., & Wang, J. (2017). The Effectiveness of Data Augmentation in Image Classification Using Deep Learning. *arXiv preprint arXiv:1712.04621*.
-14. World Health Organization (WHO). (2019). *WHO Guidelines on Good Agricultural and Collection Practices (GACP) for Medicinal Plants*. World Health Organization, Geneva.
-15. Vercel Documentation. (2024). *Edge Functions, Serverless Frameworks, and Global CDN Infrastructure*. Retrieved from https://vercel.com/docs
-16. Bcrypt Documentation. (2024). *Modern Password Hashing for Python Applications Based on the Blowfish Cipher*. Retrieved from https://pypi.org/project/bcrypt/
-17. PyJWT Documentation. (2024). *JSON Web Token Implementation in Python*. Retrieved from https://pyjwt.readthedocs.io/
-18. Food and Agriculture Organization (FAO). (2022). *Integrated Pest Management (IPM) Farmer Field School Curriculum for Tropical Agro-Ecosystems*. FAO Plant Production and Protection Series, Rome.
+
+### Western Taxonomy Bias for Indian Crops
+
+Commercial computer vision tools are trained on Western flora, repeatedly misclassifying tropical crops like Coconut, Areca Palm, and Betel Leaf.
+
+
+### Lack of Vernacular Multilingual Guidance
+
+Over 85% of Indian farmers communicate in regional languages, yet mainstream agricultural applications only provide advice in English.
+
+
+### Network Fragility in Remote Farmlands
+
+Rural farmlands frequently suffer from intermittent cellular internet, causing conventional cloud-dependent applications to fail completely.
+
+
+### No Centralized Surveillance Platform
+
+Foliar scan records, agricultural advisories, diagnostic histories, and epidemic trends are scattered across disconnected local channels.
+
+
+### Inefficient Emergency Communication
+
+Farmers and extension officers face delays in receiving time-critical quarantine alerts about sudden pest attacks and fungal spores.
+
+
+### Lack of Real-Time Geospatial Analytics
+
+State Agricultural Departments do not have access to real-time spatial heatmaps and crop health statistics for proactive intervention.
+
+
+## OBJECTIVES
+
+The primary goal of FLORAai is to modernize, automate, and enhance the botanical diagnostic and crop health management process for farmers, gardeners, and academic institutions. The specific objectives of this project are:
+
+To Streamline the Plant Diagnostic Process: Develop a centralized AI-enabled platform that manages leaf image capture, species identification, foliar health analysis, and treatment formulation efficiently within a single system.
+
+To Eliminate Western Taxonomy Bias: Standardize an authentic 46-species Indian subcontinent botanical catalog covering field crops, culinary spices, medicinal herbs, and regional palms.
+
+To Strengthen Diagnostic Accuracy: Implement a dual-head MobileNetV3 deep learning architecture (FloraDualNet) alongside multimodal vision models for simultaneous species recognition and pathology localization.
+
+To Prescribe 100% Organic & Ayurvedic Treatments: Formulate zero-chemical remedies utilizing neem oil, sour buttermilk sprays, wood ash, and bio-fungicides to restore ecological balance.
+
+To Offer Vernacular Multilingual Accessibility: Display plant names and diagnostic advice in native regional scripts including Kannada, Tamil, Hindi, and English.
+
+To Quantify Plant Vitality with Objective Scoring: Compute an objective foliar vitality metric from 0 (Severely Compromised) to 100 (Flourishing) based on necrosis area ratios.
+
+To Support Instant Edge & Cloud Camera Diagnostics: Deliver end-to-end inference latencies under 1.8 seconds from camera capture to full diagnostic breakdown.
+
+To Improve Communication and Collaboration: Enable smooth interaction between farmers, extension officers, and institutions through real-time notifications, advisories, and quarantine updates.
+
+To Generate Analytical Insights: Provide advanced dashboards and analytics tools to monitor disease outbreak statistics, regional trends, and plant recovery rates effectively.
+
+To Develop a Scalable and User-Friendly Platform: Design a responsive, secure, and scalable system using modern technologies capable of handling large-scale agricultural operations efficiently.
+
+
+## APPLICATIONS
+
+The primary goal of FLORAai is to modernize, automate, and improve the botanical diagnostic and crop health management process for farmers, gardeners, and academic institutions. The specific applications of this project are:
+
+Smallholder Farm Crop Health Management – FLORAai provides a centralized mobile diagnostic tool for smallholders to identify blights in paddy, wheat, cotton, and sugarcane without visiting distant laboratories.
+
+AI-Based Botanical Advisory System – The platform uses Artificial Intelligence to analyze leaf venation, chlorosis, and textural symptom data to provide personalized care recommendations and organic treatments.
+
+Real-Time Camera Foliar Diagnostic Assessment – FLORAai supports real-time camera inspection where farmers can capture live video frames of leaves in a secure digital environment with instant automated scoring.
+
+AI Plant Pathology & Vitality Scoring Platform – The system includes deep learning foliar classification that evaluates plant vitality objectively, outputting severity badges from healthy to critical blight.
+
+Organic Ayurvedic Remedy Formulation Engine – FLORAai details specific natural preparations—such as neem seed kernel extract, sour buttermilk spray, wood ash, and bio-fungicides—complete with dosage.
+
+Agricultural Extension & Quarantine Advisory System – Extension officers can use intelligent dashboards to search, filter, and track disease outbreaks based on severity, crops, and geographical locations.
+
+Geospatial Epidemic Surveillance and Reporting – The platform generates detailed outbreak reports and analytics such as disease frequencies, affected acreages, and temporal trends for data-driven decisions.
+
+Crop Recovery Tracking and Performance Monitoring – FLORAai identifies recovery progress across consecutive scans, helping farmers monitor weak areas through historical timeline comparisons.
+
+
+# CHAPTER 2
+
+
+# HARDWARE AND SOFTWARE REQUIREMENTS
+
+
+## Hardware Configuration
+
+The following hardware specifications are required to host the local development environment and run the FastAPI backend and machine learning inference pipelines without performance bottlenecks:
+
+Processor – Intel Core i3 (Minimum) / Intel Core i5, Apple Silicon M-Series, or AMD Ryzen equivalent (Recommended) or higher.
+
+Random Access Memory (RAM) – 4 GB (Minimum) / 8 GB or higher (Recommended) for smooth multitasking between the IDE, local server, deep learning pipelines, and browser testing.
+
+Storage (Hard Disk / SSD) – Minimum 10 GB of free disk space for the operating system, IDE, model checkpoints, and botanical assets. An SSD is highly recommended for faster executions.
+
+Network / Connectivity – A stable Broadband/Wi-Fi internet connection is strictly required for downloading packages, syncing MongoDB Atlas clusters, and integrating live APIs.
+
+
+## Software Specification
+
+This project utilizes a modern Python FastAPI and React architecture for highly scalable, asynchronous processing, enabling a unified, resilient ecosystem across both frontend and backend to streamline development and deployment.
+
+Operating System: Windows 10 / 11, macOS, or Linux (Ubuntu).
+
+Local Server Environment: Python (v3.10 to v3.12 64-bit) with Node.js (v18.x or higher).
+
+Frontend Build Tool: Vite / React Scripts.
+
+Package Manager: PIP / NPM.
+
+Backend Language & Framework: Python with FastAPI and Uvicorn ASGI Server.
+
+Database (DBMS): MongoDB (NoSQL) hosted on MongoDB Atlas.
+
+Frontend Technologies: HTML5, CSS3 (Tailwind CSS), React.js, and Lucide Icons.
+
+IDE: Visual Studio Code (VS Code).
+
+External APIs & SDKs:
+
+Google Gemini Vision API: For multimodal semantic plant pathology reasoning and visual verification.
+
+HTML5 MediaDevices Camera API: For real-time camera shutter capture and video streaming on mobile devices.
+
+
+# CHAPTER 3
+
+
+# DATABASE DESIGN
+
+
+## INTRODUCTION
+
+The database plays a vital role in the FLORAai platform as it is responsible for storing, organizing, managing, and retrieving all botanical diagnostic records, user accounts, plant catalogs, and disease outbreak data efficiently. The entire system depends on the database for handling user profiles, leaf scan records, foliar health scores, symptoms, organic Ayurvedic remedies, regional outbreak incident reports, and audit logs.
+
+The database is designed using Entity Relationship (ER) concepts to establish proper relationships between different entities such as Farmers, Agricultural Officers, Botanical Researchers, State Departments, Plant Species, Foliar Scans, Outbreaks, and Care Records. A well-structured database design helps maintain data consistency, integrity, security, and efficient communication between different modules of the platform.
+
+FLORAai uses MongoDB as the primary database management system because it provides flexibility, scalability, faster performance, and efficient handling of dynamic data structures. MongoDB stores data in collections and documents, making it suitable for handling large amounts of semi-structured foliar diagnostic data. The database supports secure storage of user credentials, high-resolution leaf scan payloads, AI diagnostic outputs, and geospatial coordinates.
+
+The database also supports important functionalities such as user authentication, role-based access control, foliar scan history retrieval, outbreak geocoding, and real-time catalog lookups. Proper compound indexing on user_id, plant_id, and timestamps ensures sub-5ms query performance even during concurrent user operations.
+
+The FLORAai database design is developed to support scalability, reliability, and efficient data processing for agricultural disease surveillance. It helps agricultural officers monitor disease outbreaks effectively and allows farmers to track their crop recovery progress over time.
+
+
+## DATA FLOW DIAGRAM (DFD)
+
+
+### 1. DFD LEVEL 0
+
+
+*Figure 3.2.1: DFD LEVEL 0*
+
+
+### 2. DFD LEVEL 1: For Farmer & Domestic Grower
+
+
+*Figure 3.2.2: DFD Level 1 - Foliar Capture & Diagnostics*
+
+
+### DFD LEVEL 2: For Farmer & Domestic Grower
+
+
+*Figure 3.2.3: DFD Level 2 - DualNet Inference & Ayurvedic Remedies*
+
+
+### DFD LEVEL 1: For Agricultural Extension Officer
+
+
+*Figure 3.2.4: DFD Level 1 - Outbreak Surveillance & Quarantine*
+
+
+### DFD LEVEL 2: For Agricultural Extension Officer
+
+
+*Figure 3.2.5: DFD Level 2 - Epidemic Clustering & Taluk Broadcast*
+
+
+### DFD LEVEL 1: For Ayurvedic Specialist & Botanist
+
+
+*Figure 3.2.6: DFD Level 1 - Botanical Herbarium & Phytotherapy*
+
+
+### DFD LEVEL 2: For Ayurvedic Specialist & Botanist
+
+
+*Figure 3.2.7: DFD Level 2 - Organic Recipe Validation & Bio-Safety*
+
+
+### DFD LEVEL 1: For State Agriculture Department
+
+
+*Figure 3.2.8: DFD Level 1 - District Crop Telemetry & Analytics*
+
+
+### DFD LEVEL 2: For State Agriculture Department
+
+
+*Figure 3.2.9: DFD Level 2 - PKVY Organic Farm Certification*
+
+
+## Schema Diagram
+
+A Schema Diagram is a visual representation of the structure of a database. It shows tables, fields, data types, and relationships between the tables.
+
+
+*Figure 3.3.1 Schema Diagram*
+
+
+## Entity Relationship Diagram
+
+
+*Figure 3.4.1:Entity Relationship Diagram*
+
+
+# CHAPTER 4
+
+
+# TESTING AND IMPLEMENTATION
+
+
+## WHITE BOX TESTING
+
+White box testing is a software testing method in which the internal code structure, logic, conditions, and program flow of the system are tested. It ensures that all functionalities of the FLORAai platform work correctly and efficiently.
+
+
+*Figure 4.1.1: White Box Testing*
+
+
+## BLACKBOX TESTING
+
+Black box testing is a software testing method in which the functionality of the system is tested without examining the internal code, program structure, or implementation details. It mainly focuses on validating the input, output, user interface, and overall behavior of the application according to the specified requirements.
+
+
+*Figure 4.2.1: Black Box Testing*
+
+
+## UNIT TESTING
+
+Unit testing is a software testing technique in which individual units, modules, or functions of the application are tested independently to ensure that each component works correctly. It mainly focuses on verifying the internal logic, functionality, input handling, and output of a specific part of the system before integration with other modules.
+
+
+*Figure 4.3.1: Unit Testing*
+
+
+## 4.4. INTEGRATION TESTING
+
+Integration testing is a software testing technique in which multiple modules or components of a system are combined and tested together to verify their interaction and data flow. It ensures that different modules of the FLORAai platform work together correctly without errors.
+
+
+*Figure 4.4.1: Integration Testing*
+
+
+## SYSTEM TESTING
+
+System testing is a software testing process in which the complete and integrated application is tested as a whole to ensure that all modules work properly together. It verifies whether the system meets the specified functional and non-functional requirements. This testing helps identify errors, performance issues, and integration problems before the software is deployed to users. The main objective of system testing is to ensure the application is reliable, efficient, and ready for real-world use.
+
+
+*Figure 4.5.1: System Testing*
+
+
+## ACCEPTANCE TESTING
+
+Acceptance testing is performed to check whether the software meets user and business requirements. It is done after system testing to ensure the application works correctly in real-world conditions. This testing confirms that all major features function properly and satisfy user expectations. The main aim is to verify that the software is ready for final deployment and use.
+
+
+*Figure 4.6.1: Acceptance Testing*
+
+
+## VALIDATION TESTING
+
+Validation testing is the process of evaluating software to ensure that it meets user requirements and performs the intended functions correctly. It checks whether the developed system satisfies business needs and works properly in real-world conditions. This testing helps confirm the accuracy, reliability, and quality of the application before deployment. The main objective of validation testing is to ensure that the right product has been built for the users.
+
+
+*Figure 4.7.1: Validation Testing*
+
+
+# CHAPTER 5
+
+
+# SCREENSHOTS
+
+
+## Index Page (Landing Hero & Platform Showcase)
+
+
+*Figure 5.1.1: Index Page (Landing Hero & Platform Showcase)*
+
+
+## Botanical Herbarium Showcase (46 Native Species)
+
+
+*Figure 5.1.2: Botanical Herbarium Showcase (46 Native Species)*
+
+
+## User Login Page
+
+
+*Figure 5.1.3: User Login Page*
+
+
+## Login Form with Farmer Authentication
+
+
+*Figure 5.1.4: Login Form with Farmer Authentication*
+
+
+## User Registration Page (Farmer Onboarding)
+
+
+*Figure 5.1.5: User Registration Page (Farmer Onboarding)*
+
+
+## Password Recovery & Security Portal
+
+
+*Figure 5.1.6: Password Recovery & Security Portal*
+
+
+## Farmer Plant Diagnostics Dashboard
+
+
+*Figure 5.1.7: Farmer Plant Diagnostics Dashboard*
+
+
+## Verified Indian Crop & Preset Selector
+
+
+*Figure 5.1.8: Verified Indian Crop & Preset Selector*
+
+
+## Foliar Specimen Loaded in AI Scanner
+
+
+*Figure 5.1.9: Foliar Specimen Loaded in AI Scanner*
+
+
+## Real-Time AI Diagnostic Scanning & Laser Inference
+
+
+*Figure 5.1.10: Real-Time AI Diagnostic Scanning & Laser Inference*
+
+
+## Live Camera Viewfinder & Reticle Modal
+
+
+*Figure 5.1.11: Live Camera Viewfinder & Reticle Modal*
+
+
+## Final Disease Detection Report - Certificate & Health Score
+
+
+*Figure 5.1.12: Final Disease Detection Report - Certificate & Health Score*
+
+
+## Final Disease Detection Report - Organic Ayurvedic Remedies
+
+
+*Figure 5.1.13: Final Disease Detection Report - Organic Ayurvedic Remedies*
+
+
+## Final Disease Detection Report - Foliar Metrics & Audio Speech
+
+
+*Figure 5.1.14: Final Disease Detection Report - Foliar Metrics & Audio Speech*
+
+
+## Second Plant Diagnosis & Foliar Disease Evaluation
+
+
+*Figure 5.1.15: Second Plant Diagnosis & Foliar Disease Evaluation*
+
+
+## Scan History & Diagnostic Archive Page
+
+
+*Figure 5.1.16: Scan History & Diagnostic Archive Page*
+
+
+## Farmer Profile & Plantation Details
+
+
+*Figure 5.1.17: Farmer Profile & Plantation Details*
+
+
+## User Preferences & Diagnostic Threshold Settings
+
+
+*Figure 5.1.18: User Preferences & Diagnostic Threshold Settings*
+
+
+## Phytotherapy & Ayurvedic Remedy Knowledge Base
+
+
+*Figure 5.1.19: Phytotherapy & Ayurvedic Remedy Knowledge Base*
+
+
+## Extension Officer Outbreak Surveillance Console
+
+
+*Figure 5.1.20: Extension Officer Outbreak Surveillance Console*
+
+
+## CONCLUSION AND FUTURE SCOPE
+
+
+## CONCLUSION
+
+The FLORAai platform was developed to address the growing need for an intelligent and centralized botanical diagnostic and crop health management system for farmers, domestic gardeners, agricultural extension officers, and academic institutions. By integrating plant health diagnostics, deep learning dual-head vision, 46 native botanical species, localized vernacular naming, and 100% organic Ayurvedic remedy formulations into a single platform, the project successfully reduces the complexity and inefficiency of traditional agricultural advisory systems.
+
+Through the implementation of a modern architecture using React.js, Tailwind CSS, Python, FastAPI, and MongoDB, the system ensures secure data management, smooth communication between modules, and efficient handling of user activities. The modern botanical design provides a clean, interactive, and user-friendly experience that improves engagement for all types of users on the platform.
+
+This project demonstrates a scalable, secure, and intelligent solution for automating plant pathology diagnostics and organic remedy recommendations. Features such as real-time camera leaf capture, chlorosis area segmentation, quantitative vitality scoring (0 to 100), geospatial disease outbreak mapping, and scan history tracking enhance both agricultural decision-making and sustainable farming practices.
+
+Overall, FLORAai serves as a strong foundation for future advancements such as autonomous drone surveys, IoT soil sensor telemetry, offline quantized edge inference, and vernacular speech assistance. The project highlights how modern software technologies and AI-driven systems can significantly improve the efficiency, transparency, and sustainability of agricultural crop health management.
+
+
+## FUTURE SCOPE
+
+Autonomous Drone Multispectral Aerial Surveys: Future versions can include automated aerial NDVI surveys using low-cost agricultural drones for large-scale crop health mapping across extensive agricultural estates.
+
+IoT Soil Sensor Telemetry Integration: The system can be upgraded to integrate hardware soil sensors measuring moisture, electrical conductivity, and NPK nutrients to correlate foliar chlorosis with root-zone conditions.
+
+Vernacular Speech-to-Speech Voice Assistant: Real-time regional voice recognition and speech synthesis can be integrated in Kannada, Tamil, Telugu, and Hindi to assist rural farmers verbally.
+
+Offline On-Device Quantized Edge Inference: TFLite and ONNX Runtime models can be embedded in the browser to enable instant foliar diagnostics with zero internet connectivity.
+
+Satellite Remote Sensing & Weather Correlation: Real-time satellite meteorological data can be connected to predict fungal blight risks 7 days in advance based on humidity and rainfall.
+
+Blockchain-Based Herbal Provenance Ledger: Blockchain technology can be integrated to verify organic Ayurvedic herb cultivation and provide tamper-proof purity certificates.
+
+Community Farmer Krishi Forum: A peer-to-peer discussion forum can be added where farmers share organic remedy formulations and discuss pest management.
+
+Microscopic Spore Identification: The system can be connected with smartphone optical microscope attachments to detect fungal spores before visible leaf spots emerge.
+
+Automated SMS & WhatsApp Emergency Broadcasts: Push notifications and automated SMS/WhatsApp alerts can be implemented to warn farmers when an outbreak is confirmed in their taluk.
+
+Automated Pest Trap Counting: Computer vision object detection models (YOLO) can be integrated to count and classify insect pests caught in sticky orchard traps.
+
+Nutritional Deficiency Foliar Heatmaps: Advanced segmentation heatmaps can be generated to distinguish micronutrient deficiencies (iron, zinc, magnesium) from fungal infections.
+
+Government Subsidy & Organic Certification Pipeline: The application can interface with national organic farming portals (PKVY) to facilitate official bio-farming certification.
+
+
+## REFERENCES
+
+React.js Official Documentation (https://react.dev/) was used for developing the frontend user interface using reusable components and modern React features. It helped in building responsive pages, routing, and interactive dashboards for students, recruiters, and institutions.
+
+Node.js Official Documentation (https://nodejs.org/) was used for backend server-side development and handling asynchronous operations efficiently. It was used to manage APIs, authentication, and database communication.
+
+FastAPI Documentation (https://fastapi.tiangolo.com/) was used for creating RESTful APIs, middleware handling, and routing between frontend and backend modules in the FLORAai platform.
+
+MongoDB Documentation (https://www.mongodb.com/docs/) was used for designing and managing the NoSQL database structure for storing user profiles, scan histories, plant catalogs, and disease outbreaks.
+
+Motor Documentation (https://motor.readthedocs.io/) was used for asynchronous database validation and handling non-blocking object modeling between Python and MongoDB Atlas.
+
+MDN Web Docs – JavaScript (https://developer.mozilla.org/en-US/docs/Web/JavaScript) was used for understanding JavaScript concepts, DOM manipulation, ES6 features, and asynchronous programming techniques.
+
+Tailwind CSS Documentation (https://tailwindcss.com/docs) was used for designing modern, responsive, and glassmorphism-based user interfaces with utility-first CSS styling.
+
+Google Fonts (https://fonts.google.com/) was used for selecting clean and professional typography styles to improve the visual appearance of the application.
+
+Font Awesome & Lucide Icons (https://lucide.dev/) were used for adding icons and visual elements in dashboards, forms, navigation menus, and analytics sections.
+
+Visual Studio Code (https://code.visualstudio.com/) was used as the primary code editor for writing, debugging, and managing frontend and backend source code efficiently.
+
+GitHub (https://github.com/) was used for version control, project repository management, and maintaining project source code backups during development.
+
+Postman (https://www.postman.com/) was used for testing REST APIs, validating backend responses, and checking authentication and database operations.
+
+W3Schools (https://www.w3schools.com/) was used as a quick reference for HTML, CSS, JavaScript, React basics, and backend syntax during implementation.
+
+GeeksforGeeks (https://www.geeksforgeeks.org/) was used for understanding concepts related to database management systems, data structures, algorithms, and ER diagrams.
+
+YouTube React Tutorial (https://www.youtube.com/watch?v=bMknfKXIFA8) was used for learning React.js concepts, component structures, hooks, and frontend development practices.
+
+YouTube Deep Learning & PyTorch Tutorial (https://www.youtube.com/watch?v=V_xro1bcAuA) was used for understanding computer vision models, transfer learning, and foliar classification concepts.
+
+Google Gemini Multimodal AI Documentation (https://ai.google.dev/) was used for integrating real-time visual inspection and leaf pathology reasoning into the FLORAai platform.

@@ -936,8 +936,21 @@ async def cron_weekly_digest(request: Request, background: BackgroundTasks):
     return {"status": "accepted"}
 
 
+STATIC_BUILD_DIR = ROOT_DIR / "static_build"
+if not STATIC_BUILD_DIR.exists():
+    STATIC_BUILD_DIR = ROOT_DIR.parent / "frontend" / "build"
+
+
 @api_router.get("/")
 async def root():
+    index_file = STATIC_BUILD_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+    return {"message": "FLORAai API", "status": "ok"}
+
+
+@api_router.get("/status")
+async def api_status():
     return {"message": "FLORAai API", "status": "ok"}
 
 
