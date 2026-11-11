@@ -93,3 +93,6 @@ frontend/node_modules/.cache/default-development/3.pack
 # Generated training dataset variations (regenerable via train_plant_ai.py)
 backend/dataset/
 
+
+# Raw high-DPI screenshot dumps (optimized versions tracked in website_screenshots/optimized/)
+website_screenshots/*.png

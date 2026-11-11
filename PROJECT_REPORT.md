@@ -261,52 +261,52 @@ The FLORAai database design is developed to support scalability, reliability, an
 *Figure 3.2.1: DFD LEVEL 0*
 
 
-### 2 .DFD LEVEL 1: For Student
+### 2. DFD LEVEL 1: For Farmer & Domestic Grower
 
 
-*Figure 3.2.2 : level 1 for student*
+*Figure 3.2.2: DFD Level 1 - Foliar Capture & Diagnostics*
 
 
-### DFD LEVEL 2: For Student
+### DFD LEVEL 2: For Farmer & Domestic Grower
 
 
-*Figure 3.2.3 : level 2 for student*
+*Figure 3.2.3: DFD Level 2 - DualNet Inference & Ayurvedic Remedies*
 
 
-### DFD LEVEL 1: For College/University
+### DFD LEVEL 1: For Agricultural Extension Officer
 
 
-*Figure 3.2.4 : level 1 for College/University*
+*Figure 3.2.4: DFD Level 1 - Outbreak Surveillance & Quarantine*
 
 
-### DFD LEVEL 2: For College/University
+### DFD LEVEL 2: For Agricultural Extension Officer
 
 
-*Figure 3.2.5 : level 2 for College/University*
+*Figure 3.2.5: DFD Level 2 - Epidemic Clustering & Taluk Broadcast*
 
 
-### DFD LEVEL 1: For HR Professional
+### DFD LEVEL 1: For Ayurvedic Specialist & Botanist
 
 
-*Figure 3.2.6 : level 1 for HR Professional*
+*Figure 3.2.6: DFD Level 1 - Botanical Herbarium & Phytotherapy*
 
 
-### DFD LEVEL 2: For HR Professional
+### DFD LEVEL 2: For Ayurvedic Specialist & Botanist
 
 
-*Figure 3.2.7 : level 2 for HR Professional*
+*Figure 3.2.7: DFD Level 2 - Organic Recipe Validation & Bio-Safety*
 
 
-### DFD LEVEL 1: For Company Workspace
+### DFD LEVEL 1: For State Agriculture Department
 
 
-*Figure 3.2.8 : level 1 for Company Workspace*
+*Figure 3.2.8: DFD Level 1 - District Crop Telemetry & Analytics*
 
 
-### DFD LEVEL 2: For Company Workspace
+### DFD LEVEL 2: For State Agriculture Department
 
 
-*Figure 3.2.9 : level 2 for Company Workspace*
+*Figure 3.2.9: DFD Level 2 - PKVY Organic Farm Certification*
 
 
 ## Schema Diagram
@@ -391,124 +391,124 @@ Validation testing is the process of evaluating software to ensure that it meets
 # SCREENSHOTS
 
 
-## Index page
+## Index Page (Landing Hero & Platform Showcase)
 
 
-*Figure 5.1.1 Index page*
+*Figure 5.1.1: Index Page (Landing Hero & Platform Showcase)*
 
 
-## Login Page
+## Botanical Herbarium Showcase (46 Native Species)
 
 
-*Figure 5.1.2 Login Page*
+*Figure 5.1.2: Botanical Herbarium Showcase (46 Native Species)*
 
 
-## Student Registration Page
+## User Login Page
 
 
-*Figure 5.1.3 Student Registration*
+*Figure 5.1.3: User Login Page*
 
 
-## Institution Registration Page
+## Login Form with Farmer Authentication
 
 
-*Figure 5.1.4 Institution Registration*
+*Figure 5.1.4: Login Form with Farmer Authentication*
 
 
-## HR Professional Registration Page
+## User Registration Page (Farmer Onboarding)
 
 
-*Figure 5.1.5 HR Registration*
+*Figure 5.1.5: User Registration Page (Farmer Onboarding)*
 
 
-## Company Registration Page
+## Password Recovery & Security Portal
 
 
-*Figure 5.1.6 Company Registration*
+*Figure 5.1.6: Password Recovery & Security Portal*
 
 
-## Student Dashboard Page ( student )
+## Farmer Plant Diagnostics Dashboard
 
 
-*Figure 5.1.7 Student Dashboard*
+*Figure 5.1.7: Farmer Plant Diagnostics Dashboard*
 
 
-## AI Interview Page(student)
+## Verified Indian Crop & Preset Selector
 
 
-*Figure 5.1.8 AI Interview*
+*Figure 5.1.8: Verified Indian Crop & Preset Selector*
 
 
-## Trending Skills Page ( student )
+## Foliar Specimen Loaded in AI Scanner
 
 
-*Figure 5.1.9 Trending Skill*
+*Figure 5.1.9: Foliar Specimen Loaded in AI Scanner*
 
 
-## Aptitude Test Page ( student )
+## Real-Time AI Diagnostic Scanning & Laser Inference
 
 
-*Figure 5.1.10 Aptitude Test*
+*Figure 5.1.10: Real-Time AI Diagnostic Scanning & Laser Inference*
 
 
-## Resume Builder Page ( student )
+## Live Camera Viewfinder & Reticle Modal
 
 
-*Figure 5.1.11 Resume Builder*
+*Figure 5.1.11: Live Camera Viewfinder & Reticle Modal*
 
 
-## Tab Switch Detection Page (student)
+## Final Disease Detection Report - Certificate & Health Score
 
 
-*Figure 5.1.12 Tab Switching*
+*Figure 5.1.12: Final Disease Detection Report - Certificate & Health Score*
 
 
-## Institution Dashboard Page
+## Final Disease Detection Report - Organic Ayurvedic Remedies
 
 
-*Figure 5.1.13 Institution Dashboard*
+*Figure 5.1.13: Final Disease Detection Report - Organic Ayurvedic Remedies*
 
 
-## Institution Generate Report Page
+## Final Disease Detection Report - Foliar Metrics & Audio Speech
 
 
-*Figure 5.1.14 Institution Generate Report*
+*Figure 5.1.14: Final Disease Detection Report - Foliar Metrics & Audio Speech*
 
 
-## HR Dashboard Page
+## Second Plant Diagnosis & Foliar Disease Evaluation
 
 
-*Figure 5.1.15 HR Dashboard*
+*Figure 5.1.15: Second Plant Diagnosis & Foliar Disease Evaluation*
 
 
-## Candidate Management Page (HR)
+## Scan History & Diagnostic Archive Page
 
 
-*Figure 5.1.16 Candidate Management*
+*Figure 5.1.16: Scan History & Diagnostic Archive Page*
 
 
-## Video Interview Page (HR)
+## Farmer Profile & Plantation Details
 
 
-*Figure 5.1.17 Video Interview*
+*Figure 5.1.17: Farmer Profile & Plantation Details*
 
 
-## Offer Letter Generator Page (HR)
+## User Preferences & Diagnostic Threshold Settings
 
 
-*Figure 5.1.18 Offer Letter Generator*
+*Figure 5.1.18: User Preferences & Diagnostic Threshold Settings*
 
 
-## Posting And Managing Job Page (HR)
+## Phytotherapy & Ayurvedic Remedy Knowledge Base
 
 
-*Figure 5.1.19 Institution Dashboard*
+*Figure 5.1.19: Phytotherapy & Ayurvedic Remedy Knowledge Base*
 
 
-## Company Dashboard
+## Extension Officer Outbreak Surveillance Console
 
 
-*Figure 5.1.20 Company Dashboard*
+*Figure 5.1.20: Extension Officer Outbreak Surveillance Console*
 
 
 ## CONCLUSION AND FUTURE SCOPE
