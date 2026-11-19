@@ -89,6 +89,10 @@ export const REAL_PLANT_PHOTOS = {
   "Cotton (Hatti / Kapas)": "/plants/cotton.jpg",
   "Bamboo (Bidiru / Baans)": "/plants/bamboo.jpg",
   "Money Plant (Mani Plant / Pothos)": "/plants/money_plant.jpg",
+  "Coleus (Kannadi Soppu / Painted Nettle)": "/plants/coleus.jpg",
+  "Painted Nettle": "/plants/coleus.jpg",
+  "Pink Lipstick Palm": "/plants/lipstick_palm.jpg",
+  "Indian Badam": "/plants/badam.jpg",
   "Ashwagandha (Indian Ginseng)": "/plants/ashwagandha.jpg",
   "Giloy / Guduchi (Amrutavalli)": "/plants/giloy.jpg"
 };
@@ -131,10 +135,13 @@ const ALIAS_MAP = [
   [
     [
       "bismarck palm",
+      "bismarck palm tree",
       "bismarckia",
+      "bismarckia nobilis",
       "bismarck",
       "bismarque",
       "silver fan palm",
+      "silver palm",
       "belli taale",
       "belli bisanige taale",
       "ಬೆಳ್ಳಿ ಬೀಸಣಿಗೆ ತಾಳೆ",
@@ -145,15 +152,22 @@ const ALIAS_MAP = [
   ],
   [
     [
+      "pink lip stick palm",
+      "pink lipstick palm",
+      "pink palm",
       "lipstick palm",
+      "lip stick palm",
       "lipstick",
       "lipstick palm tree",
+      "red lipstick palm",
       "sealing wax palm",
       "kempu taale",
+      "kempu thaale",
       "ಕೆಂಪು ತಾಳೆ",
       "ಲಿಪ್‌ಸ್ಟಿಕ್ ಪಾಮ್",
       "red palm",
       "cyrtostachys",
+      "cyrtostachys renda",
       "ಕೆಂಪು ತಾಳೆ / ಲಿಪ್‌ಸ್ಟಿಕ್ ಪಾಮ್"
     ],
     "Lipstick Palm"
@@ -161,12 +175,18 @@ const ALIAS_MAP = [
   [
     [
       "badam",
+      "inidan badam",
+      "indian badam",
       "badam plant",
+      "badam tree",
       "badami gida",
       "badami mara",
+      "badami",
       "indian almond",
       "sea almond",
       "tropical almond",
+      "terminalia catappa",
+      "terminalia",
       "ಬಾದಾಮಿ ಗಿಡ",
       "ಬಾದಾಮಿ ಮರ",
       "ಬಾದಾಮಿ",
@@ -664,6 +684,19 @@ const ALIAS_MAP = [
       "ಅಮೃತಬಳ್ಳಿ"
     ],
     "Giloy / Guduchi"
+  ],
+  [
+    [
+      "coleus",
+      "painted nettle",
+      "painted nettle plant",
+      "painted-nettle",
+      "kannadi soppu",
+      "ಕನ್ನಡಿ ಸೊಪ್ಪು",
+      "plectranthus",
+      "plectranthus scutellarioides"
+    ],
+    "Coleus"
   ]
 ];
 
