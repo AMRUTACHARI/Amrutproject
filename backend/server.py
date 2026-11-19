@@ -954,7 +954,7 @@ async def root():
 
 @api_router.get("/status")
 async def api_status():
-    return {"message": "FLORAai API", "status": "ok"}
+    return {"message": "FLORAai API", "status": "ok", "version": "v3.1-species-detection"}
 
 
 # Mount routes both with /api prefix and at root for seamless monorepo rewrite handling
