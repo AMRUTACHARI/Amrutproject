@@ -20,7 +20,7 @@ function FullScreenLoader() {
 export function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   const location = useLocation();
-  if (loading || user === null) return <FullScreenLoader />;
+  if (loading) return <FullScreenLoader />;
   if (!user) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
@@ -30,7 +30,7 @@ export function ProtectedRoute({ children }) {
 export function AdminRoute({ children }) {
   const { user, loading } = useAuth();
   const location = useLocation();
-  if (loading || user === null) return <FullScreenLoader />;
+  if (loading) return <FullScreenLoader />;
   if (!user) return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   if (user.role !== "admin") return <Navigate to="/dashboard" replace />;
   return children;

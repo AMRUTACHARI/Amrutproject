@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
   const refreshUser = useCallback(async () => {
     try {
-      const { data } = await api.get("/auth/me");
+      const { data } = await api.get("/auth/me", { timeout: 3500 });
       setUser(data.user);
       return data.user;
     } catch {
@@ -19,10 +19,28 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    let active = true;
+    const safetyTimer = setTimeout(() => {
+      if (active) setLoading(false);
+    }, 2500);
+
     (async () => {
-      await refreshUser();
-      setLoading(false);
+      try {
+        await refreshUser();
+      } catch {
+        if (active) setUser(false);
+      } finally {
+        if (active) {
+          clearTimeout(safetyTimer);
+          setLoading(false);
+        }
+      }
     })();
+
+    return () => {
+      active = false;
+      clearTimeout(safetyTimer);
+    };
   }, [refreshUser]);
 
   const login = async (email, password, remember) => {

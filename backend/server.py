@@ -943,13 +943,7 @@ if not STATIC_BUILD_DIR.exists():
 
 @api_router.get("/")
 async def root():
-    index_file = STATIC_BUILD_DIR / "index.html"
-    if index_file.exists():
-        try:
-            return FileResponse(index_file)
-        except Exception:
-            return HTMLResponse(content=index_file.read_text(encoding="utf-8"))
-    return {"message": "FLORAai API", "status": "ok"}
+    return {"message": "FLORAai API", "status": "ok", "version": "v3.1-species-detection"}
 
 
 @api_router.get("/status")
@@ -957,9 +951,8 @@ async def api_status():
     return {"message": "FLORAai API", "status": "ok", "version": "v3.1-species-detection"}
 
 
-# Mount routes both with /api prefix and at root for seamless monorepo rewrite handling
+# Mount API router strictly under /api prefix to avoid route collisions with frontend SPA & static assets
 app.include_router(api_router, prefix="/api")
-app.include_router(api_router)
 
 cors_origins_env = os.environ.get("CORS_ORIGINS", "")
 configured_origins = [o.strip() for o in cors_origins_env.split(",") if o.strip()]
@@ -1069,6 +1062,16 @@ if STATIC_BUILD_DIR.exists():
         app.mount("/static", StaticFiles(directory=str(STATIC_BUILD_DIR / "static")), name="static_assets")
     if (STATIC_BUILD_DIR / "plants").exists():
         app.mount("/plants", StaticFiles(directory=str(STATIC_BUILD_DIR / "plants")), name="plant_images")
+
+    @app.get("/")
+    async def serve_spa_root():
+        index_file = STATIC_BUILD_DIR / "index.html"
+        if index_file.exists():
+            try:
+                return FileResponse(index_file)
+            except Exception:
+                return HTMLResponse(content=index_file.read_text(encoding="utf-8"))
+        return {"message": "FLORAai API", "status": "ok"}
 
     @app.get("/{full_path:path}")
     async def serve_spa_frontend(full_path: str):

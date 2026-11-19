@@ -34,6 +34,7 @@ export const API = resolveApiBaseUrl();
 const api = axios.create({
   baseURL: API,
   withCredentials: true,
+  timeout: 10000,
 });
 
 api.interceptors.request.use((config) => {
